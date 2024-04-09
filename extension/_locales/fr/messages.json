@@ -1,0 +1,58 @@
+{
+  "extensionName": {
+    "message": "Belgian Train Station",
+    "description": "Extension name."
+  },
+  "stationName": {
+    "message": "Nom de la gare",
+    "description": "Station name."
+  },
+  "clear": {
+    "message": "Effacer",
+    "description": "Clear."
+  },
+  "fetchingData": {
+    "message": "Obtenir les données de la gare: ",
+    "description": "Load message while fetching data."
+  },
+  "departures": {
+    "message": "Départs: ",
+    "description": "Label for the amount of departures."
+  },
+  "noResults": {
+    "message": "Aucun résultat trouvé pour ",
+    "description": "Label to show when there are no results."
+  },
+  "yes": {
+    "message": "Oui",
+    "description": "Yes."
+  },
+  "no": {
+    "message": "Non",
+    "description": "No."
+  },
+  "canceled": {
+    "message": "Annulé",
+    "description": "Canceled."
+  },
+  "delay": {
+    "message": "Retard",
+    "description": "Delay."
+  },
+  "platform": {
+    "message": "Plate-forme",
+    "description": "Platform."
+  },
+  "station": {
+    "message": "Gare",
+    "description": "Station."
+  },
+  "time": {
+    "message": "Temps",
+    "description": "Time."
+  },
+  "version": {
+    "message": "Version",
+    "description": "Version"
+  }
+}

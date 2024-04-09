@@ -1,0 +1,58 @@
+{
+  "extensionName": {
+    "message": "Belgian Train Station",
+    "description": "Extension name."
+  },
+  "stationName": {
+    "message": "Stationsnaam",
+    "description": "Station name."
+  },
+  "clear": {
+    "message": "Wissen",
+    "description": "Clear."
+  },
+  "fetchingData": {
+    "message": "Data ophalen voor station: ",
+    "description": "Load message while fetching data."
+  },
+  "departures": {
+    "message": "Vertrekken: ",
+    "description": "Label for the amount of departures."
+  },
+  "noResults": {
+    "message": "Geen resultaten gevonden voor ",
+    "description": "Label to show when there are no results."
+  },
+  "yes": {
+    "message": "Ja",
+    "description": "Yes."
+  },
+  "no": {
+    "message": "Nee",
+    "description": "No."
+  },
+  "canceled": {
+    "message": "Geannuleerd",
+    "description": "Canceled."
+  },
+  "delay": {
+    "message": "Vertraging",
+    "description": "Delay."
+  },
+  "platform": {
+    "message": "Perron",
+    "description": "Platform."
+  },
+  "station": {
+    "message": "Station",
+    "description": "Station."
+  },
+  "time": {
+    "message": "Tijdstip",
+    "description": "Time."
+  },
+  "version": {
+    "message": "Versie",
+    "description": "Version"
+  }
+}

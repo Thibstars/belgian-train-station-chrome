@@ -1,36 +1,36 @@
-async function loadLiveBoardForStation(stationName) {
+async function loadLiveBoardForStation(i18n, stationName) {
   const liveBoard = document.getElementById('liveBoard');
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = false;
 
-  liveBoard.innerHTML = 'Fetching station data for station: ' + stationName;
+  liveBoard.innerHTML = i18n.getMessage('fetchingData') + stationName;
 
   try {
     const response = await fetch('https://api.irail.be/liveboard/?station=' + stationName + '&format=json');
     const data = await response.json();
     console.log(data);
-    const departures = 'Departures: ' + data.departures.number;
+    const departures = i18n.getMessage('departures') + data.departures.number;
     console.log(data.departures.departure);
     console.log(data.departures.departure[0].station)
-    liveBoard.innerHTML = departures + '<br>' + createDeparturesTable(data.departures.departure);
+    liveBoard.innerHTML = departures + '<br>' + createDeparturesTable(i18n, data.departures.departure);
   } catch (error) {
-    liveBoard.innerHTML = 'No results found for ' + stationName;
+    liveBoard.innerHTML = i18n.getMessage('noResults') + stationName;
   }
 }
 
-function createDeparturesTable(departures) {
+function createDeparturesTable(i18n, departures) {
   let result = '<table id="liveBoardTable">\n'
       + '    <tr>\n'
-      + '        <th>Canceled</th>\n'
-      + '        <th>Delay</th>\n'
-      + '        <th>Platform</th>\n'
-      + '        <th>Station</th>\n'
-      + '        <th>Time</th>\n'
+      + '        <th>' + i18n.getMessage('canceled') + '</th>\n'
+      + '        <th>' + i18n.getMessage('delay') + '</th>\n'
+      + '        <th>' + i18n.getMessage('platform') + '</th>\n'
+      + '        <th>' + i18n.getMessage('station') + '</th>\n'
+      + '        <th>' + i18n.getMessage('time') + '</th>\n'
       + '    </tr>\n';
 
   for (const departure of departures) {
     result += '<tr>'
-    result += '<td>' + (departure.canceled === '0' ? 'No' : 'Yes') + '</td>'
+    result += '<td>' + (departure.canceled === '0' ? i18n.getMessage('no') : i18n.getMessage('yes')) + '</td>'
     result += '<td>' + departure.delay + '</td>'
     result += '<td>' + departure.platform + '</td>'
     result += '<td>' + departure.station + '</td>'
@@ -43,13 +43,25 @@ function createDeparturesTable(departures) {
   return result;
 }
 
+function setStaticMessages(i18n) {
+  const title = i18n.getMessage('extensionName');
+  document.title = title;
+  document.getElementById('titleHeader').innerText = title;
+
+  document.getElementById('stationNameLabel').innerText = i18n.getMessage('stationName');
+
+  document.getElementById('clearSearch').innerText = i18n.getMessage('clear');
+}
 
 document.addEventListener('DOMContentLoaded', function() {
+  const i18n = chrome.i18n;
+  setStaticMessages(i18n);
+
   const manifestData = chrome.runtime.getManifest();
-  document.getElementById('version').innerText = 'version ' + manifestData.version;
+  document.getElementById('version').innerText = i18n.getMessage('version') + ' ' + manifestData.version;
 
   const stationNameInput = document.getElementById("stationName");
-  stationNameInput.addEventListener('input', function (){loadLiveBoardForStation(stationNameInput.value)});
+  stationNameInput.addEventListener('input', function (){loadLiveBoardForStation(i18n, stationNameInput.value)});
 
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = 'hidden';
