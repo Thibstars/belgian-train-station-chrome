@@ -5,6 +5,12 @@ async function loadLiveBoardForStation(i18n, stationName) {
 
   liveBoard.innerHTML = i18n.getMessage('fetchingData') + stationName;
 
+  const loader = document.getElementById('loader');
+  loader.setAttribute('class', 'loading-state');
+  loader.children[0].hidden = false;
+  loader.children[1].hidden = false;
+  loader.children[2].hidden = false;
+
   try {
     const response = await fetch('https://api.irail.be/liveboard/?station=' + stationName + '&format=json');
     const data = await response.json();
@@ -16,6 +22,11 @@ async function loadLiveBoardForStation(i18n, stationName) {
   } catch (error) {
     liveBoard.innerHTML = i18n.getMessage('noResults') + stationName;
   }
+
+  loader.removeAttribute('class');
+  loader.children[0].hidden = 'hidden';
+  loader.children[1].hidden = 'hidden';
+  loader.children[2].hidden = 'hidden';
 }
 
 function createDeparturesTable(i18n, departures) {
@@ -54,6 +65,12 @@ function setStaticMessages(i18n) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  const loader = document.getElementById('loader');
+  loader.removeAttribute('class');
+  loader.children[0].hidden = 'hidden';
+  loader.children[1].hidden = 'hidden';
+  loader.children[2].hidden = 'hidden';
+
   const i18n = chrome.i18n;
   setStaticMessages(i18n);
 
