@@ -45,6 +45,9 @@ function createDeparturesTable(departures) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+  const manifestData = chrome.runtime.getManifest();
+  document.getElementById('version').innerText = 'version ' + manifestData.version;
+
   const stationNameInput = document.getElementById("stationName");
   stationNameInput.addEventListener('input', function (){loadLiveBoardForStation(stationNameInput.value)});
 
