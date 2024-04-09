@@ -47,8 +47,9 @@ function createDeparturesTable(i18n, departures) {
 
   for (const departure of departures) {
     result += '<tr>'
-    result += '<td>' + (departure.canceled === '0' ? i18n.getMessage('no') : i18n.getMessage('yes')) + '</td>'
-    result += '<td>' + departure.delay + '</td>'
+    const isCanceled = !departure.canceled === '0';
+    result += '<td' + (isCanceled ? ' class="canceled"' : '') + '>' + (!isCanceled ? i18n.getMessage('no') : i18n.getMessage('yes')) + '</td>'
+    result += '<td' + (departure.delay > 0 ? ' class="delayed"' : '') + '>' + departure.delay + '</td>'
     result += '<td>' + departure.platform + '</td>'
     result += '<td>' + departure.station + '</td>'
     result += '<td>' + new Date(departure.time * 1000).toLocaleString() + '</td>'

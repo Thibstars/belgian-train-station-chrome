@@ -25,6 +25,13 @@ html body {
     text-align: center;
 }
 
+#liveBoardTable .canceled,
+#liveBoardTable .delayed {
+    color: rgba(253, 218, 37, 1);
+    font-weight: bold;
+    background-color: red;
+}
+
 .loading-state {
     position: fixed;
     top: 0;
