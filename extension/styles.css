@@ -3,6 +3,54 @@ html body {
     height: 150px;
 }
 
+#titleHeader {
+    text-align: center;
+    background-size: 100%;
+    background-clip: text;
+    background-repeat: repeat;
+    background-image: linear-gradient(
+            45deg,
+            #000000 15%,
+            rgba(253, 218, 37, 1) 58%,
+            rgba(239, 51, 64, 1) 16%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow-text-simple-animation-rev 0.75s ease forwards;
+}
+
+#titleHeader:hover {
+    animation: rainbow-text-simple-animation 0.5s ease-in forwards;
+}
+
+/* Move the background and make it smaller. */
+/* Animation shown when entering the page and after the hover animation. */
+@keyframes rainbow-text-simple-animation-rev {
+    0% {
+        background-size: 650%;
+    }
+    40% {
+        background-size: 650%;
+    }
+    100% {
+        background-size: 100%;
+    }
+}
+
+/* Move the background and make it larger. */
+/* Animation shown when hovering over the text. */
+@keyframes rainbow-text-simple-animation {
+    0% {
+        background-size: 100%;
+    }
+    80% {
+        background-size: 650%;
+    }
+    100% {
+        background-size: 650%;
+    }
+}
+
 #donationLink {
     display: flex;
     justify-content: left;
@@ -29,7 +77,7 @@ html body {
 #liveBoardTable .delayed {
     color: rgba(253, 218, 37, 1);
     font-weight: bold;
-    background-color: red;
+    background-color: rgba(239, 51, 64, 1);
 }
 
 #liveBoardTable .unknownPlatform {
