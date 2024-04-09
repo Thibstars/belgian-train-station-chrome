@@ -1,0 +1,11 @@
+{
+  "name": "Belgian Train Station",
+  "description": "Get updates for a Belgian train station.",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
+  },
+  "author": "Thibault Helsmoortel"
+}

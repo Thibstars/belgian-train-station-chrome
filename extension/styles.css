@@ -1,0 +1,26 @@
+html body {
+    width: 325px;
+    height: 150px;
+}
+
+#donationLink {
+    display: flex;
+    justify-content: left;
+}
+
+#liveBoardTable {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse
+}
+
+#liveBoardTable tr td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+#liveBoardTable th {
+    background-color: lightgray;
+    border: 1px solid black;
+    text-align: center;
+}
