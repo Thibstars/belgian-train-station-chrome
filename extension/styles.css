@@ -32,6 +32,12 @@ html body {
     background-color: red;
 }
 
+#liveBoardTable .unknownPlatform {
+    background-color: rgba(253, 218, 37, 1);
+    font-weight: bold;
+    color: black;
+}
+
 .loading-state {
     position: fixed;
     top: 0;
