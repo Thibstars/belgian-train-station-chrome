@@ -12,7 +12,13 @@ async function loadLiveBoardForStation(i18n, stationName) {
   loader.children[2].hidden = false;
 
   try {
-    const response = await fetch('https://api.irail.be/liveboard/?station=' + stationName + '&format=json');
+    const response = await fetch(
+        'https://api.irail.be/liveboard/?station=' + stationName + '&format=json',
+        {
+          headers: {
+            'user-agent': 'Belgian Train Station (https://github.com/Thibstars/belgian-train-station-chrome)'
+          }
+        });
     const data = await response.json();
     console.log(data);
     const departures = i18n.getMessage('departures') + data.departures.number;
