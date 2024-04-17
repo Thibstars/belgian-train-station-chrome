@@ -61,6 +61,7 @@ function createDeparturesTable(i18n, stationName, departures) {
 
   for (const departure of departures) {
     const delayInMinutes = departure.delay / 60;
+    const time = new Date(departure.time * 1000);
 
     result += '<tr>'
     const isCanceled = !departure.canceled === '0';
@@ -70,7 +71,7 @@ function createDeparturesTable(i18n, stationName, departures) {
     result += '<td' + (departure.platform === '?' ? ' class="unknownPlatform"' : '') + '>' + departure.platform
         + '</td>'
     result += '<td>' + departure.station + '</td>'
-    result += '<td>' + new Date(departure.time * 1000).toLocaleString() + '</td>'
+    result += '<td title="' + time.toLocaleString() + '">' + time.toLocaleTimeString() + '</td>'
     result += '</tr>'
   }
 
