@@ -36,7 +36,7 @@ function createDeparturesTable(i18n, departures) {
   let result = '<table id="liveBoardTable">\n'
       + '    <tr>\n'
       + '        <th>' + i18n.getMessage('canceled') + '</th>\n'
-      + '        <th title="' +  i18n.getMessage('delayTitle') + '">' + i18n.getMessage('delay') + '</th>\n'
+      + '        <th title="' + i18n.getMessage('delayTitle') + '">' + i18n.getMessage('delay') + '</th>\n'
       + '        <th>' + i18n.getMessage('platform') + '</th>\n'
       + '        <th>' + i18n.getMessage('station') + '</th>\n'
       + '        <th>' + i18n.getMessage('time') + '</th>\n'
@@ -47,9 +47,11 @@ function createDeparturesTable(i18n, departures) {
 
     result += '<tr>'
     const isCanceled = !departure.canceled === '0';
-    result += '<td' + (isCanceled ? ' class="canceled"' : '') + '>' + (!isCanceled ? i18n.getMessage('no') : i18n.getMessage('yes')) + '</td>'
+    result += '<td' + (isCanceled ? ' class="canceled"' : '') + '>' + (!isCanceled ? i18n.getMessage('no')
+        : i18n.getMessage('yes')) + '</td>'
     result += '<td' + (delayInMinutes > 0 ? ' class="delayed"' : '') + '>' + delayInMinutes + '</td>'
-    result += '<td' + (departure.platform === '?' ? ' class="unknownPlatform"' : '') + '>' + departure.platform + '</td>'
+    result += '<td' + (departure.platform === '?' ? ' class="unknownPlatform"' : '') + '>' + departure.platform
+        + '</td>'
     result += '<td>' + departure.station + '</td>'
     result += '<td>' + new Date(departure.time * 1000).toLocaleString() + '</td>'
     result += '</tr>'
@@ -70,7 +72,7 @@ function setStaticMessages(i18n) {
   document.getElementById('clearSearch').innerText = i18n.getMessage('clear');
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const loader = document.getElementById('loader');
   loader.removeAttribute('class');
   loader.children[0].hidden = 'hidden';
@@ -84,11 +86,13 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('version').innerText = i18n.getMessage('version') + ' ' + manifestData.version;
 
   const stationNameInput = document.getElementById("stationName");
-  stationNameInput.addEventListener('input', function (){loadLiveBoardForStation(i18n, stationNameInput.value)});
+  stationNameInput.addEventListener('input', function () {
+    loadLiveBoardForStation(i18n, stationNameInput.value)
+  });
 
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = 'hidden';
-  clearSearch.addEventListener('click', function (){
+  clearSearch.addEventListener('click', function () {
     document.getElementById('liveBoard').innerHTML = '';
     stationNameInput.value = '';
     clearSearch.hidden = 'hidden'
