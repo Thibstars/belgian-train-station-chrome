@@ -20,10 +20,7 @@ async function loadLiveBoardForStation(i18n, stationName) {
           }
         });
     const data = await response.json();
-    console.log(data);
     const departures = i18n.getMessage('departures') + data.departures.number;
-    console.log(data.departures.departure);
-    console.log(data.departures.departure[0].station)
     liveBoard.innerHTML = departures + '<br>' + createDeparturesTable(i18n, data.departures.departure);
   } catch (error) {
     liveBoard.innerHTML = i18n.getMessage('noResults') + stationName;
