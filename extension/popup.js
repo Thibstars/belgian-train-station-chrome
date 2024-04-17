@@ -6,10 +6,7 @@ async function loadLiveBoardForStation(i18n, stationName) {
   liveBoard.innerHTML = i18n.getMessage('fetchingData') + stationName;
 
   const loader = document.getElementById('loader');
-  loader.setAttribute('class', 'loading-state');
-  loader.children[0].hidden = false;
-  loader.children[1].hidden = false;
-  loader.children[2].hidden = false;
+  showLoader();
 
   try {
     const response = await fetch(
@@ -26,6 +23,19 @@ async function loadLiveBoardForStation(i18n, stationName) {
     liveBoard.innerHTML = i18n.getMessage('noResults') + stationName;
   }
 
+  hideLoader();
+}
+
+function showLoader() {
+  const loader = document.getElementById('loader');
+  loader.setAttribute('class', 'loading-state');
+  loader.children[0].hidden = false;
+  loader.children[1].hidden = false;
+  loader.children[2].hidden = false;
+}
+
+function hideLoader() {
+  const loader = document.getElementById('loader');
   loader.removeAttribute('class');
   loader.children[0].hidden = 'hidden';
   loader.children[1].hidden = 'hidden';
