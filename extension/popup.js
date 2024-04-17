@@ -36,17 +36,19 @@ function createDeparturesTable(i18n, departures) {
   let result = '<table id="liveBoardTable">\n'
       + '    <tr>\n'
       + '        <th>' + i18n.getMessage('canceled') + '</th>\n'
-      + '        <th>' + i18n.getMessage('delay') + '</th>\n'
+      + '        <th title="' +  i18n.getMessage('delayTitle') + '">' + i18n.getMessage('delay') + '</th>\n'
       + '        <th>' + i18n.getMessage('platform') + '</th>\n'
       + '        <th>' + i18n.getMessage('station') + '</th>\n'
       + '        <th>' + i18n.getMessage('time') + '</th>\n'
       + '    </tr>\n';
 
   for (const departure of departures) {
+    const delayInMinutes = departure.delay / 60;
+
     result += '<tr>'
     const isCanceled = !departure.canceled === '0';
     result += '<td' + (isCanceled ? ' class="canceled"' : '') + '>' + (!isCanceled ? i18n.getMessage('no') : i18n.getMessage('yes')) + '</td>'
-    result += '<td' + (departure.delay > 0 ? ' class="delayed"' : '') + '>' + departure.delay + '</td>'
+    result += '<td' + (delayInMinutes > 0 ? ' class="delayed"' : '') + '>' + delayInMinutes + '</td>'
     result += '<td' + (departure.platform === '?' ? ' class="unknownPlatform"' : '') + '>' + departure.platform + '</td>'
     result += '<td>' + departure.station + '</td>'
     result += '<td>' + new Date(departure.time * 1000).toLocaleString() + '</td>'

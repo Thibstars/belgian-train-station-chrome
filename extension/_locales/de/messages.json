@@ -39,6 +39,10 @@
     "message": "Verzögerung",
     "description": "Delay."
   },
+  "delayTitle": {
+    "message": "Verzögerung in Minuten",
+    "description": "Delay in minutes."
+  },
   "platform": {
     "message": "Plattform",
     "description": "Platform."

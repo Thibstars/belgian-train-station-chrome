@@ -39,6 +39,10 @@
     "message": "Vertraging",
     "description": "Delay."
   },
+  "delayTitle": {
+    "message": "Minuten vertraging",
+    "description": "Delay in minutes."
+  },
   "platform": {
     "message": "Perron",
     "description": "Platform."
