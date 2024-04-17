@@ -58,5 +58,9 @@
   "version": {
     "message": "Versie",
     "description": "Version"
+  },
+  "stationDataClarification": {
+    "message": "Huidige data getoond voor:",
+    "description": "Clarification on which station's data is currently being shown."
   }
 }

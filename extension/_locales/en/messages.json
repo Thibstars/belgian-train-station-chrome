@@ -58,5 +58,9 @@
   "version": {
     "message": "Version",
     "description": "Version"
+  },
+  "stationDataClarification": {
+    "message": "Currently showing data for:",
+    "description": "Clarification on which station's data is currently being shown."
   }
 }

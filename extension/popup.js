@@ -2,10 +2,10 @@ async function loadLiveBoardForStation(i18n, stationName) {
   const liveBoard = document.getElementById('liveBoard');
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = false;
+  removeStationDataClarifierIfPresent();
 
   liveBoard.innerHTML = i18n.getMessage('fetchingData') + stationName;
 
-  const loader = document.getElementById('loader');
   showLoader();
 
   try {
@@ -18,12 +18,19 @@ async function loadLiveBoardForStation(i18n, stationName) {
         });
     const data = await response.json();
     const departures = i18n.getMessage('departures') + data.departures.number;
-    liveBoard.innerHTML = departures + '<br>' + createDeparturesTable(i18n, data.departures.departure);
+    liveBoard.innerHTML = departures + '<br>' + createDeparturesTable(i18n, stationName, data.departures.departure);
   } catch (error) {
     liveBoard.innerHTML = i18n.getMessage('noResults') + stationName;
   }
 
   hideLoader();
+}
+
+function removeStationDataClarifierIfPresent() {
+  const stationDataClarifier = document.getElementById('stationDataClarifier');
+  if (stationDataClarifier) {
+    stationDataClarifier.remove();
+  }
 }
 
 function showLoader() {
@@ -42,8 +49,8 @@ function hideLoader() {
   loader.children[2].hidden = 'hidden';
 }
 
-function createDeparturesTable(i18n, departures) {
-  let result = '<table id="liveBoardTable">\n'
+function createDeparturesTable(i18n, stationName, departures) {
+  let result = '<table id="liveBoardTable" data-station-name="' + stationName + '">\n'
       + '    <tr>\n'
       + '        <th>' + i18n.getMessage('canceled') + '</th>\n'
       + '        <th title="' + i18n.getMessage('delayTitle') + '">' + i18n.getMessage('delay') + '</th>\n'
@@ -95,17 +102,27 @@ document.addEventListener('DOMContentLoaded', function () {
   const manifestData = chrome.runtime.getManifest();
   document.getElementById('version').innerText = i18n.getMessage('version') + ' ' + manifestData.version;
 
-  const stationNameInput = document.getElementById("stationName");
-  stationNameInput.addEventListener('input', function () {
-    loadLiveBoardForStation(i18n, stationNameInput.value)
-  });
-
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = 'hidden';
   clearSearch.addEventListener('click', function () {
     document.getElementById('liveBoard').innerHTML = '';
     stationNameInput.value = '';
     clearSearch.hidden = 'hidden'
+  });
+
+  const stationNameInput = document.getElementById("stationName");
+  stationNameInput.addEventListener('input', function () {
+    if (stationNameInput.value) {
+      loadLiveBoardForStation(i18n, stationNameInput.value);
+    } else {
+      clearSearch.hidden = 'hidden';
+      const stationName = document.getElementById('liveBoardTable').getAttribute('data-station-name');
+      const stationDataClarifier = document.createElement('span');
+      stationDataClarifier.setAttribute('id', 'stationDataClarifier')
+      stationDataClarifier.innerText = i18n.getMessage('stationDataClarification') + ' ' + stationName;
+      const liveBoardContainer = document.getElementById('liveBoardContainer');
+      liveBoardContainer.insertBefore(stationDataClarifier, liveBoardContainer.children[0]);
+    }
   });
 
 }, false);
