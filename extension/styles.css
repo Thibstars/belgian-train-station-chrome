@@ -65,12 +65,22 @@ html body {
 #liveBoardTable tr td {
     border: 1px solid black;
     text-align: center;
+    padding: 2px;
 }
 
 #liveBoardTable th {
-    background-color: lightgray;
+    background-color: #DDF1FA;
     border: 1px solid black;
     text-align: center;
+    padding: 2px;
+}
+
+#liveBoardTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#liveBoardTable tr:hover {
+    background-color: #ddd;
 }
 
 #liveBoardTable .canceled,
