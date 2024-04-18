@@ -3,6 +3,15 @@ html body {
     height: 150px;
 }
 
+:root {
+    --flag-black: #000000;
+    --flag-yellow: rgba(253, 218, 37, 1);
+    --flag-red: rgba(239, 51, 64, 1);
+    --accent-color: #DDF1FA;
+
+    --size-bezel: .5rem;
+}
+
 #titleHeader {
     text-align: center;
     background-size: 100%;
@@ -10,9 +19,9 @@ html body {
     background-repeat: repeat;
     background-image: linear-gradient(
             45deg,
-            #000000 15%,
-            rgba(253, 218, 37, 1) 58%,
-            rgba(239, 51, 64, 1) 16%
+            var(--flag-black) 15%,
+            var(--flag-yellow) 58%,
+            var(--flag-red) 16%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -69,7 +78,7 @@ html body {
 }
 
 #liveBoardTable th {
-    background-color: #DDF1FA;
+    background-color: var(--accent-color);
     border: 1px solid black;
     text-align: center;
     padding: 2px;
@@ -85,13 +94,13 @@ html body {
 
 #liveBoardTable .canceled,
 #liveBoardTable .delayed {
-    color: rgba(253, 218, 37, 1);
+    color: var(--flag-yellow);
     font-weight: bold;
-    background-color: rgba(239, 51, 64, 1);
+    background-color: var(--flag-red);
 }
 
 #liveBoardTable .unknownPlatform {
-    background-color: rgba(253, 218, 37, 1);
+    background-color: var(--flag-yellow);
     font-weight: bold;
     color: black;
 }
@@ -122,7 +131,7 @@ html body {
     width: 50%;
     height: 100px;
     border: 10px solid rgba(0, 0, 0, 0);
-    border-top-color: rgba(253, 218, 37, 1);
+    border-top-color: var(--flag-yellow);
     animation: loading-backwards 4s linear infinite;
 }
 .loading-red {
@@ -131,7 +140,7 @@ html body {
     width: 50%;
     height: 100px;
     border: 10px solid rgba(0, 0, 0, 0);
-    border-top-color: rgba(239, 51, 64, 1);
+    border-top-color: var(--flag-red);
     animation: loading 5s linear infinite;
 }
 @-webkit-keyframes loading {
