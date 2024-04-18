@@ -60,6 +60,10 @@ html body {
     }
 }
 
+#stationNameLabel {
+    font-weight: bold;
+}
+
 #donationLink {
     display: flex;
     justify-content: left;
