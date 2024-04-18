@@ -64,11 +64,6 @@ html body {
     font-weight: bold;
 }
 
-#donationLink {
-    display: flex;
-    justify-content: left;
-}
-
 #liveBoardTable {
     width: 100%;
     border: 1px solid black;
