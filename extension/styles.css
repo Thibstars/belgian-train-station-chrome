@@ -64,6 +64,16 @@ html body {
     font-weight: bold;
 }
 
+#stationName {
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+#clearSearch {
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
 #liveBoardTable {
     width: 100%;
     border: 1px solid black;
