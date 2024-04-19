@@ -22,6 +22,25 @@ async function loadLiveBoardForStation(i18n, stationName) {
   }
 }
 
+async function loadRandomStation(i18n) {
+  try {
+    const response = await fetch(
+        'https://api.irail.be/stations/?format=json&lang=' + i18n.getMessage('@@ui_locale'),
+        {
+          headers: {
+            'user-agent': 'Belgian Train Station (https://github.com/Thibstars/belgian-train-station-chrome)'
+          }
+        });
+    const data = await response.json();
+
+    const stations = data.station;
+
+    return stations[Math.floor(Math.random() * stations.length)];
+  } catch (error) {
+    return error;
+  }
+}
+
 function removeStationDataClarifierIfPresent() {
   const stationDataClarifier = document.getElementById('stationDataClarifier');
   if (stationDataClarifier) {
@@ -119,6 +138,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const i18n = chrome.i18n;
   setStaticMessages(i18n);
 
+  const stationNameInput = document.getElementById('stationName');
+  loadRandomStation(i18n).then(
+      (randomStation) => {
+        stationNameInput.placeholder = randomStation.name;
+      }
+  );
+
   const manifestData = chrome.runtime.getManifest();
   document.getElementById('version').innerText = i18n.getMessage('version') + ' ' + manifestData.version;
 
@@ -128,9 +154,14 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('liveBoard').innerHTML = '';
     stationNameInput.value = '';
     clearSearch.hidden = 'hidden'
+
+    loadRandomStation(i18n).then(
+        (randomStation) => {
+          stationNameInput.placeholder = randomStation.name;
+        }
+    );
   });
 
-  const stationNameInput = document.getElementById("stationName");
   stationNameInput.addEventListener('input', function () {
     if (stationNameInput.value) {
       const liveBoard = document.getElementById('liveBoard');
