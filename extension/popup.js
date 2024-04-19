@@ -16,14 +16,10 @@ async function loadLiveBoardForStation(i18n, stationName) {
             'user-agent': 'Belgian Train Station (https://github.com/Thibstars/belgian-train-station-chrome)'
           }
         });
-    const data = await response.json();
-    const departures = i18n.getMessage('departures') + data.departures.number;
-    liveBoard.innerHTML = departures + '<br>' + createDeparturesTable(i18n, stationName, data.departures.departure);
+    return await response.json();
   } catch (error) {
-    liveBoard.innerHTML = i18n.getMessage('noResults') + stationName;
+    return error;
   }
-
-  hideLoader();
 }
 
 function removeStationDataClarifierIfPresent() {
@@ -90,6 +86,29 @@ function setStaticMessages(i18n) {
   document.getElementById('clearSearch').innerText = i18n.getMessage('clear');
 }
 
+function showLiveBoard(i18n, stationName, data, liveBoard) {
+  const departures = i18n.getMessage('departures') + data.departures.number;
+  liveBoard.innerHTML = departures + '<br>' + createDeparturesTable(i18n, stationName, data.departures.departure);
+
+  hideLoader();
+}
+
+function showNoResults(liveBoard, i18n, stationName) {
+  liveBoard.innerHTML = i18n.getMessage('noResults') + stationName;
+
+  hideLoader();
+}
+
+function showStationDataClarifier(clearSearch, i18n) {
+  clearSearch.hidden = 'hidden';
+  const stationName = document.getElementById('liveBoardTable').getAttribute('data-station-name');
+  const stationDataClarifier = document.createElement('span');
+  stationDataClarifier.setAttribute('id', 'stationDataClarifier')
+  stationDataClarifier.innerText = i18n.getMessage('stationDataClarification') + ' ' + stationName;
+  const liveBoardContainer = document.getElementById('liveBoardContainer');
+  liveBoardContainer.insertBefore(stationDataClarifier, liveBoardContainer.children[0]);
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const loader = document.getElementById('loader');
   loader.removeAttribute('class');
@@ -114,15 +133,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const stationNameInput = document.getElementById("stationName");
   stationNameInput.addEventListener('input', function () {
     if (stationNameInput.value) {
-      loadLiveBoardForStation(i18n, stationNameInput.value);
+      const liveBoard = document.getElementById('liveBoard');
+      loadLiveBoardForStation(i18n, stationNameInput.value).then(
+          (data) => {
+            showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
+          },
+          () => {
+            showNoResults(liveBoard, i18n, stationNameInput.value);
+          }
+      );
     } else {
-      clearSearch.hidden = 'hidden';
-      const stationName = document.getElementById('liveBoardTable').getAttribute('data-station-name');
-      const stationDataClarifier = document.createElement('span');
-      stationDataClarifier.setAttribute('id', 'stationDataClarifier')
-      stationDataClarifier.innerText = i18n.getMessage('stationDataClarification') + ' ' + stationName;
-      const liveBoardContainer = document.getElementById('liveBoardContainer');
-      liveBoardContainer.insertBefore(stationDataClarifier, liveBoardContainer.children[0]);
+      showStationDataClarifier(clearSearch, i18n);
     }
   });
 
