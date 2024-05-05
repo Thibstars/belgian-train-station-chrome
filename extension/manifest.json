@@ -11,5 +11,6 @@
   "icons": {
     "48": "icon.png"
   },
+  "host_permissions": ["https://api.irail.be/*"],
   "author": "Thibault Helsmoortel"
 }
