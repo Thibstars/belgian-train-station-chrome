@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
       (randomStation) => {
         stationNameInput.placeholder = randomStation.name;
       },
-      (error) => {
+      () => {
         stationNameInput.placeholder = '';
       }
   );
