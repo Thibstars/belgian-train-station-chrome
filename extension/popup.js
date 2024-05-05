@@ -148,6 +148,9 @@ document.addEventListener('DOMContentLoaded', function () {
   loadRandomStation(i18n).then(
       (randomStation) => {
         stationNameInput.placeholder = randomStation.name;
+      },
+      (error) => {
+        stationNameInput.placeholder = '';
       }
   );
 
