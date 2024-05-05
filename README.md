@@ -1,4 +1,4 @@
-# Belgian Train Station - Chrome Extension #
+# Belgian Train Station - Chrome Extension ![GitHub Latest Release)](https://img.shields.io/github/v/release/Thibstars/belgian-train-station-chrome?logo=github)
 
 ![icon.png](extension%2Ficon.png)
 
