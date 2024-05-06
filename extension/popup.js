@@ -126,7 +126,7 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
     tdCanceled.replaceChildren(document.createTextNode(!isCanceled ? i18n.getMessage('no') : i18n.getMessage('yes')));
     const tdDelay = document.createElement('td');
     tdDelay.className = isDelayed ? 'delayed' : '';
-    tdDelay.replaceChildren(document.createTextNode(delayInMinutes.toString()));
+    tdDelay.replaceChildren(document.createTextNode(isDelayed ? delayInMinutes.toString() : '-'));
     const tdPlatform = document.createElement('td');
     tdPlatform.className = isUnknownPlatform ? 'unknownPlatform' : '';
     tdPlatform.title = isUnknownPlatform ? i18n.getMessage('unknownPlatform') : '';
