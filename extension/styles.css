@@ -199,6 +199,10 @@ html body {
     text-decoration: underline;
 }
 
+#movements {
+    margin-top: 1em;
+}
+
 #movementAmount {
     font-weight: bold;
     background-color: var(--accent-color);

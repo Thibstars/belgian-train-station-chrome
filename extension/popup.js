@@ -179,6 +179,7 @@ function showLiveBoard(i18n, stationName, data, liveBoard) {
   const movementType = Symbol.for(liveBoard.getAttribute('data-movement-type'));
 
   let movements = document.createElement('div');
+  movements.id = 'movements';
   const numberSpan = document.createElement('span');
   numberSpan.id = 'movementAmount';
   let movementData;
