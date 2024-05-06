@@ -11,9 +11,15 @@
 <h1 id="titleHeader">Belgian Train Station</h1>
 
 <div id="inputContainer">
-    <label id="stationNameLabel" for="stationName">Station name</label>
-    <input id="stationName" name="stationName" type="text">
-    <button id="clearSearch" hidden="hidden">Clear</button>
+    <div>
+        <label id="movementTypeLabel" for="movementType" class="formLabel">Movement type</label>
+        <select id="movementType" name="movementType"></select>
+    </div>
+    <div>
+        <label id="stationNameLabel" for="stationName" class="formLabel">Station name</label>
+        <input id="stationName" name="stationName" type="text">
+        <button id="clearSearch" hidden="hidden">Clear</button>
+    </div>
 </div>
 
 <div id="loader" class="loading-state">
