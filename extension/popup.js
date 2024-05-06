@@ -178,25 +178,40 @@ function setStaticMessages(i18n) {
 function showLiveBoard(i18n, stationName, data, liveBoard) {
   const movementType = Symbol.for(liveBoard.getAttribute('data-movement-type'));
 
-  let movements;
+  let movements = document.createElement('div');
+  const numberSpan = document.createElement('span');
+  numberSpan.id = 'movementAmount';
   let movementData;
 
   switch (movementType) {
     case MOVEMENT_TYPE.DEPARTURE:
-      movements = i18n.getMessage('departures') + data.departures.number;
+      movements.replaceChildren(
+          document.createTextNode(i18n.getMessage('departures')),
+          numberSpan
+      );
+      numberSpan.innerText = data.departures.number;
       movementData = data.departures.departure;
       break;
     case MOVEMENT_TYPE.ARRIVAL:
-      movements = i18n.getMessage('arrivals') + data.arrivals.number;
+      movements.replaceChildren(
+          document.createTextNode(i18n.getMessage('arrivals')),
+          numberSpan
+      );
+      numberSpan.innerText = data.arrivals.number;
+
       movementData = data.arrivals.arrival;
       break
     default:
-      movements = i18n.getMessage('departures') + data.departures.number;
+      movements.replaceChildren(
+          document.createTextNode(i18n.getMessage('departures')),
+          numberSpan
+      );
+      numberSpan.innerText = data.departures.number;
       movementData = data.departures.departure;
   }
 
   liveBoard.replaceChildren(
-      document.createTextNode(movements),
+      movements,
       document.createElement('br'),
       createMovementTable(liveBoard, i18n, stationName, movementData)
   );
