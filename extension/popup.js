@@ -1,3 +1,12 @@
+const API_REQUEST_INIT =         {
+  headers: {
+    'user-agent': 'Belgian Train Station (https://github.com/Thibstars/belgian-train-station-chrome)',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+  }
+};
+
 async function loadLiveBoardForStation(i18n, stationName) {
   const liveBoard = document.getElementById('liveBoard');
   const clearSearch = document.getElementById('clearSearch');
@@ -11,14 +20,8 @@ async function loadLiveBoardForStation(i18n, stationName) {
   try {
     const response = await fetch(
         'https://api.irail.be/liveboard/?station=' + stationName + '&format=json&lang=' + i18n.getMessage('@@ui_locale'),
-        {
-          headers: {
-            'user-agent': 'Belgian Train Station (https://github.com/Thibstars/belgian-train-station-chrome)',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-          }
-        });
+        API_REQUEST_INIT
+    );
     return await response.json();
   } catch (error) {
     return error;
@@ -29,14 +32,8 @@ async function loadRandomStation(i18n) {
   try {
     const response = await fetch(
         'https://api.irail.be/stations/?format=json&lang=' + i18n.getMessage('@@ui_locale'),
-        {
-          headers: {
-            'user-agent': 'Belgian Train Station (https://github.com/Thibstars/belgian-train-station-chrome)',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-          }
-        });
+        API_REQUEST_INIT
+    );
     const data = await response.json();
 
     const stations = data.station;
