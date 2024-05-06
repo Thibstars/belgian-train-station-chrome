@@ -63,7 +63,6 @@ html body {
 #inputContainer > div {
     margin-top: 1em;
     display: flex;
-    align-content: space-evenly;
 }
 
 .formLabel {
