@@ -22,3 +22,6 @@ Following steps show how to develop and test this extension locally.
 You're good to go! After applying changes, saving your work will reload the extension in your browser.
 You might want to close and reopen it to see the changes in effect.
 For some changes (like removing a locale), you may want to hard reload the extension from the extension management page.
+
+## Packaging (for release) ##
+Packaging (for release) is as simple as creating a `.zip` file of the `extension` folder.
