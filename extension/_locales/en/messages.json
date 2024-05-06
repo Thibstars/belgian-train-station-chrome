@@ -78,5 +78,9 @@
   "movementType_ARRIVAL": {
     "message": "Arrival",
     "description": "Readable type value for the ARRIVAL movement type."
+  },
+  "unknownPlatform": {
+    "message": "The platform is not known (yet). Check again later.",
+    "description": "Tooltip explaining the '?' representation for unknown platforms."
   }
 }

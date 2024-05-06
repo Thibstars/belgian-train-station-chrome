@@ -129,6 +129,7 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
     tdDelay.replaceChildren(document.createTextNode(delayInMinutes.toString()));
     const tdPlatform = document.createElement('td');
     tdPlatform.className = isUnknownPlatform ? 'unknownPlatform' : '';
+    tdPlatform.title = isUnknownPlatform ? i18n.getMessage('unknownPlatform') : '';
     tdPlatform.replaceChildren(document.createTextNode(movement.platform));
     const tdStation = document.createElement('td');
     tdStation.className = 'clickableCell';

@@ -78,5 +78,9 @@
   "movementType_ARRIVAL": {
     "message": "Aankomst",
     "description": "Readable type value for the ARRIVAL movement type."
+  },
+  "unknownPlatform": {
+    "message": "Het perron is (nog) niet gekend. Probeer het later nog eens.",
+    "description": "Tooltip explaining the '?' representation for unknown platforms."
   }
 }
