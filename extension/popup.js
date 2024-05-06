@@ -67,7 +67,7 @@ function hideLoader() {
   loader.children[2].hidden = 'hidden';
 }
 
-function createDeparturesTable(i18n, stationName, departures) {
+function createDeparturesTable(liveBoard, i18n, stationName, departures) {
   const departuresTable = document.createElement('table');
   departuresTable.id = 'liveBoardTable';
   departuresTable.setAttribute('data-station-name', stationName);
@@ -112,7 +112,20 @@ function createDeparturesTable(i18n, stationName, departures) {
     tdPlatform.className = isUnknownPlatform ? 'unknownPlatform' : '';
     tdPlatform.replaceChildren(document.createTextNode(departure.platform));
     const tdStation = document.createElement('td');
+    tdStation.className = 'clickableCell';
     tdStation.replaceChildren(document.createTextNode(departure.station));
+    tdStation.onclick = function () {
+      const selectedStationName = tdStation.innerText;
+      loadLiveBoardForStation(i18n, selectedStationName).then(
+          (data) => {
+            showLiveBoard(i18n, selectedStationName, data, liveBoard);
+            document.getElementById('stationName').value = selectedStationName;
+          },
+          () => {
+            showNoResults(liveBoard, i18n, selectedStationName);
+          }
+      );
+    };
     const tdTime = document.createElement('td');
     tdTime.title = time.toLocaleString();
     tdTime.replaceChildren(document.createTextNode(time.toLocaleTimeString()));
@@ -144,7 +157,7 @@ function showLiveBoard(i18n, stationName, data, liveBoard) {
   liveBoard.replaceChildren(
       document.createTextNode(departures),
       document.createElement('br'),
-      createDeparturesTable(i18n, stationName, data.departures.departure)
+      createDeparturesTable(liveBoard, i18n, stationName, data.departures.departure)
   );
 
   hideLoader();
