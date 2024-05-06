@@ -16,11 +16,11 @@
     "description": "Load message while fetching data."
   },
   "departures": {
-    "message": "Abflüge: ",
+    "message": "Abflüge",
     "description": "Label for the amount of departures."
   },
   "arrivals": {
-    "message": "Ankünfte: ",
+    "message": "Ankünfte",
     "description": "Label for the amount of arrivals."
   },
   "noResults": {

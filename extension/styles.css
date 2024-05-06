@@ -201,6 +201,7 @@ html body {
 
 #movements {
     margin-top: 1em;
+    font-weight: bold;
 }
 
 #movementAmount {
@@ -212,4 +213,5 @@ html body {
     display: inline-flex;
     justify-content: center;
     width: 18px;
+    margin-left: .5em;
 }
