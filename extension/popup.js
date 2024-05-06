@@ -314,21 +314,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   movementTypeSelect.addEventListener('change', () => {
     const liveBoard = document.getElementById('liveBoard');
-    const stationName = document.getElementById('liveBoardTable').getAttribute('data-station-name');
-    if (stationName) {
-      const stationDataClarifier = document.getElementById('stationDataClarifier');
+    const liveBoardTable = document.getElementById('liveBoardTable');
 
-      loadLiveBoardForStation(i18n, stationName, getSelectedMovementType()).then(
-          (data) => {
-            showLiveBoard(i18n, stationName, data, liveBoard);
-            if (stationDataClarifier) {
-              showStationDataClarifier(clearSearch, i18n);
+    if (liveBoardTable) {
+      const stationName = liveBoardTable.getAttribute('data-station-name');
+      if (stationName) {
+        const stationDataClarifier = document.getElementById('stationDataClarifier');
+
+        loadLiveBoardForStation(i18n, stationName, getSelectedMovementType()).then(
+            (data) => {
+              showLiveBoard(i18n, stationName, data, liveBoard);
+              if (stationDataClarifier) {
+                showStationDataClarifier(clearSearch, i18n);
+              }
+            },
+            () => {
+              showNoResults(liveBoard, i18n, stationName);
             }
-          },
-          () => {
-            showNoResults(liveBoard, i18n, stationName);
-          }
-      );
+        );
+      }
     }
   })
 
