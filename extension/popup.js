@@ -7,14 +7,14 @@ const API_REQUEST_INIT =         {
   }
 };
 
-const LIVE_BOARD_TYPE = {
+const MOVEMENT_TYPE = {
   DEPARTURE: Symbol.for('departure'),
   ARRIVAL: Symbol.for('arrival')
 }
 
-async function loadLiveBoardForStation(i18n, stationName, liveBoardType) {
+async function loadLiveBoardForStation(i18n, stationName, movementType) {
   const liveBoard = document.getElementById('liveBoard');
-  liveBoard.setAttribute('data-live-board-type', Symbol.keyFor(liveBoardType));
+  liveBoard.setAttribute('data-movement-type', Symbol.keyFor(movementType));
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = false;
   removeStationDataClarifierIfPresent();
@@ -25,15 +25,15 @@ async function loadLiveBoardForStation(i18n, stationName, liveBoardType) {
 
   let movement;
 
-  switch (liveBoardType) {
-    case LIVE_BOARD_TYPE.DEPARTURE:
-      movement = Symbol.keyFor(LIVE_BOARD_TYPE.DEPARTURE);
+  switch (movementType) {
+    case MOVEMENT_TYPE.DEPARTURE:
+      movement = Symbol.keyFor(MOVEMENT_TYPE.DEPARTURE);
       break;
-    case LIVE_BOARD_TYPE.ARRIVAL:
-      movement = movement = Symbol.keyFor(LIVE_BOARD_TYPE.ARRIVAL);
+    case MOVEMENT_TYPE.ARRIVAL:
+      movement = movement = Symbol.keyFor(MOVEMENT_TYPE.ARRIVAL);
       break
     default:
-      movement = Symbol.keyFor(LIVE_BOARD_TYPE.DEPARTURE);
+      movement = Symbol.keyFor(MOVEMENT_TYPE.DEPARTURE);
   }
 
   try {
@@ -135,7 +135,7 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
     tdStation.replaceChildren(document.createTextNode(movement.station));
     tdStation.onclick = function () {
       const selectedStationName = tdStation.innerText;
-      loadLiveBoardForStation(i18n, selectedStationName, LIVE_BOARD_TYPE.DEPARTURE).then(
+      loadLiveBoardForStation(i18n, selectedStationName, MOVEMENT_TYPE.DEPARTURE).then(
           (data) => {
             showLiveBoard(i18n, selectedStationName, data, liveBoard);
             document.getElementById('stationName').value = selectedStationName;
@@ -171,17 +171,17 @@ function setStaticMessages(i18n) {
 }
 
 function showLiveBoard(i18n, stationName, data, liveBoard) {
-  const liveBoardType = Symbol.for(liveBoard.getAttribute('data-live-board-type'));
+  const movementType = Symbol.for(liveBoard.getAttribute('data-movement-type'));
 
   let movements;
   let movementData;
 
-  switch (liveBoardType) {
-    case LIVE_BOARD_TYPE.DEPARTURE:
+  switch (movementType) {
+    case MOVEMENT_TYPE.DEPARTURE:
       movements = i18n.getMessage('departures') + data.departures.number;
       movementData = data.departures.departure;
       break;
-    case LIVE_BOARD_TYPE.ARRIVAL:
+    case MOVEMENT_TYPE.ARRIVAL:
       movements = i18n.getMessage('arrivals') + data.arrivals.number;
       movementData = data.arrivals.arrival;
       break
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
   stationNameInput.addEventListener('input', function () {
     if (stationNameInput.value) {
       const liveBoard = document.getElementById('liveBoard');
-      loadLiveBoardForStation(i18n, stationNameInput.value, LIVE_BOARD_TYPE.DEPARTURE).then(
+      loadLiveBoardForStation(i18n, stationNameInput.value, MOVEMENT_TYPE.DEPARTURE).then(
           (data) => {
             showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
           },
