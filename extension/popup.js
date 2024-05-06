@@ -30,7 +30,7 @@ async function loadLiveBoardForStation(i18n, stationName, movementType) {
       movement = Symbol.keyFor(MOVEMENT_TYPE.DEPARTURE);
       break;
     case MOVEMENT_TYPE.ARRIVAL:
-      movement = movement = Symbol.keyFor(MOVEMENT_TYPE.ARRIVAL);
+      movement = Symbol.keyFor(MOVEMENT_TYPE.ARRIVAL);
       break
     default:
       movement = Symbol.keyFor(MOVEMENT_TYPE.DEPARTURE);
@@ -135,7 +135,10 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
     tdStation.replaceChildren(document.createTextNode(movement.station));
     tdStation.onclick = function () {
       const selectedStationName = tdStation.innerText;
-      loadLiveBoardForStation(i18n, selectedStationName, MOVEMENT_TYPE.DEPARTURE).then(
+
+      let movementType = getSelectedMovementType()
+
+      loadLiveBoardForStation(i18n, selectedStationName, movementType).then(
           (data) => {
             showLiveBoard(i18n, selectedStationName, data, liveBoard);
             document.getElementById('stationName').value = selectedStationName;
@@ -164,6 +167,8 @@ function setStaticMessages(i18n) {
   const title = i18n.getMessage('extensionName');
   document.title = title;
   document.getElementById('titleHeader').innerText = title;
+
+  document.getElementById('movementTypeLabel').innerText = i18n.getMessage('movementType');
 
   document.getElementById('stationNameLabel').innerText = i18n.getMessage('stationName');
 
@@ -215,6 +220,19 @@ function showStationDataClarifier(clearSearch, i18n) {
   liveBoardContainer.insertBefore(stationDataClarifier, liveBoardContainer.children[0]);
 }
 
+function getSelectedMovementType() {
+  const movementTypeSelect = document.getElementById('movementType');
+
+  switch (Symbol.for(movementTypeSelect.value.toLowerCase())) {
+    case MOVEMENT_TYPE.DEPARTURE :
+      return  MOVEMENT_TYPE.DEPARTURE;
+    case MOVEMENT_TYPE.ARRIVAL :
+      return  MOVEMENT_TYPE.ARRIVAL;
+    default:
+      return MOVEMENT_TYPE.DEPARTURE;
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const loader = document.getElementById('loader');
   loader.removeAttribute('class');
@@ -224,6 +242,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const i18n = chrome.i18n;
   setStaticMessages(i18n);
+
+  const movementTypeSelect = document.getElementById('movementType');
+  movementTypeSelect.replaceChildren();
+  for (let key in MOVEMENT_TYPE) {
+    const option = document.createElement('option');
+    option.value = key;
+    option.innerText = i18n.getMessage('movementType_' + key);
+    movementTypeSelect.appendChild(option);
+  }
 
   const stationNameInput = document.getElementById('stationName');
   loadRandomStation(i18n).then(
@@ -254,8 +281,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   stationNameInput.addEventListener('input', function () {
     if (stationNameInput.value) {
+      let movementType = getSelectedMovementType();
+
       const liveBoard = document.getElementById('liveBoard');
-      loadLiveBoardForStation(i18n, stationNameInput.value, MOVEMENT_TYPE.DEPARTURE).then(
+      loadLiveBoardForStation(i18n, stationNameInput.value, movementType).then(
           (data) => {
             showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
           },
@@ -267,5 +296,25 @@ document.addEventListener('DOMContentLoaded', function () {
       showStationDataClarifier(clearSearch, i18n);
     }
   });
+
+  movementTypeSelect.addEventListener('change', () => {
+    const liveBoard = document.getElementById('liveBoard');
+    const stationName = document.getElementById('liveBoardTable').getAttribute('data-station-name');
+    if (stationName) {
+      const stationDataClarifier = document.getElementById('stationDataClarifier');
+
+      loadLiveBoardForStation(i18n, stationName, getSelectedMovementType()).then(
+          (data) => {
+            showLiveBoard(i18n, stationName, data, liveBoard);
+            if (stationDataClarifier) {
+              showStationDataClarifier(clearSearch, i18n);
+            }
+          },
+          () => {
+            showNoResults(liveBoard, i18n, stationName);
+          }
+      );
+    }
+  })
 
 }, false);

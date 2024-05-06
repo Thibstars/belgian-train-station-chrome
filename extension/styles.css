@@ -60,8 +60,21 @@ html body {
     }
 }
 
-#stationNameLabel {
+#inputContainer > div {
+    margin-top: 1em;
+    display: flex;
+    align-content: space-evenly;
+}
+
+.formLabel {
     font-weight: bold;
+    min-width: 30%;
+}
+
+#movementType {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 3px;
 }
 
 #stationName {
@@ -73,6 +86,7 @@ html body {
 #clearSearch {
     border: 1px solid black;
     border-radius: 4px;
+    margin-left: .5em;
 }
 
 #liveBoardTable {

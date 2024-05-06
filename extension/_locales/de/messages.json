@@ -66,5 +66,17 @@
   "stationDataClarification": {
     "message": "Derzeit werden Daten angezeigt für:",
     "description": "Clarification on which station's data is currently being shown."
+  },
+  "movementType": {
+    "message": "Abfahrt/Ankunft",
+    "description": "Movement type."
+  },
+  "movementType_DEPARTURE": {
+    "message": "Abfahrt",
+    "description": "Readable type value for the DEPARTURE movement type."
+  },
+  "movementType_ARRIVAL": {
+    "message": "Ankunft",
+    "description": "Readable type value for the ARRIVAL movement type."
   }
 }
