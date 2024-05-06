@@ -225,9 +225,9 @@ function getSelectedMovementType() {
 
   switch (Symbol.for(movementTypeSelect.value.toLowerCase())) {
     case MOVEMENT_TYPE.DEPARTURE :
-      return  MOVEMENT_TYPE.DEPARTURE;
+      return MOVEMENT_TYPE.DEPARTURE;
     case MOVEMENT_TYPE.ARRIVAL :
-      return  MOVEMENT_TYPE.ARRIVAL;
+      return MOVEMENT_TYPE.ARRIVAL;
     default:
       return MOVEMENT_TYPE.DEPARTURE;
   }
