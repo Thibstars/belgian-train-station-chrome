@@ -179,3 +179,8 @@ html body {
 #stationDataClarifier {
     font-weight: bold;
 }
+
+.clickableCell:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
