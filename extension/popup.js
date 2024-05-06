@@ -4,7 +4,7 @@ async function loadLiveBoardForStation(i18n, stationName) {
   clearSearch.hidden = false;
   removeStationDataClarifierIfPresent();
 
-  liveBoard.innerHTML = i18n.getMessage('fetchingData') + stationName;
+  liveBoard.replaceChildren(document.createTextNode(i18n.getMessage('fetchingData') + stationName));
 
   showLoader();
 
@@ -71,34 +71,64 @@ function hideLoader() {
 }
 
 function createDeparturesTable(i18n, stationName, departures) {
-  let result = '<table id="liveBoardTable" data-station-name="' + stationName + '">\n'
-      + '    <tr>\n'
-      + '        <th>' + i18n.getMessage('canceled') + '</th>\n'
-      + '        <th title="' + i18n.getMessage('delayTitle') + '">' + i18n.getMessage('delay') + '</th>\n'
-      + '        <th>' + i18n.getMessage('platform') + '</th>\n'
-      + '        <th>' + i18n.getMessage('station') + '</th>\n'
-      + '        <th>' + i18n.getMessage('time') + '</th>\n'
-      + '    </tr>\n';
+  const departuresTable = document.createElement('table');
+  departuresTable.id = 'liveBoardTable';
+  departuresTable.setAttribute('data-station-name', stationName);
+  const headerRow = document.createElement('tr');
+  const thCanceled = document.createElement('th');
+  thCanceled.replaceChildren(document.createTextNode(i18n.getMessage('canceled')));
+  const thDelay = document.createElement('th');
+  thDelay.title = i18n.getMessage('delayTitle');
+  thDelay.replaceChildren(document.createTextNode(i18n.getMessage('delay')));
+  const thPlatform = document.createElement('th');
+  thPlatform.replaceChildren(document.createTextNode(i18n.getMessage('platform')));
+  const thStation = document.createElement('th');
+  thStation.replaceChildren(document.createTextNode(i18n.getMessage('station')));
+  const thTime = document.createElement('th');
+  thTime.replaceChildren(document.createTextNode(i18n.getMessage('time')));
+  headerRow.replaceChildren(
+      thCanceled,
+      thDelay,
+      thPlatform,
+      thStation,
+      thTime,
+  );
+  departuresTable.replaceChildren(headerRow);
 
   for (const departure of departures) {
     const delayInMinutes = departure.delay / 60;
     const time = new Date(departure.time * 1000);
-
-    result += '<tr>'
     const isCanceled = !departure.canceled === '0';
-    result += '<td' + (isCanceled ? ' class="canceled"' : '') + '>' + (!isCanceled ? i18n.getMessage('no')
-        : i18n.getMessage('yes')) + '</td>'
-    result += '<td' + (delayInMinutes > 0 ? ' class="delayed"' : '') + '>' + delayInMinutes + '</td>'
-    result += '<td' + (departure.platform === '?' ? ' class="unknownPlatform"' : '') + '>' + departure.platform
-        + '</td>'
-    result += '<td>' + departure.station + '</td>'
-    result += '<td title="' + time.toLocaleString() + '">' + time.toLocaleTimeString() + '</td>'
-    result += '</tr>'
+    const isDelayed = delayInMinutes > 0;
+    const isUnknownPlatform = departure.platform === '?';
+
+    const trDeparture = document.createElement('tr');
+    departuresTable.appendChild(trDeparture);
+
+    const tdCanceled = document.createElement('td');
+    tdCanceled.className = isCanceled ? 'canceled' : '';
+    tdCanceled.replaceChildren(document.createTextNode(!isCanceled ? i18n.getMessage('no') : i18n.getMessage('yes')));
+    const tdDelay = document.createElement('td');
+    tdDelay.className = isDelayed ? 'delayed' : '';
+    tdDelay.replaceChildren(document.createTextNode(delayInMinutes.toString()));
+    const tdPlatform = document.createElement('td');
+    tdPlatform.className = isUnknownPlatform ? 'unknownPlatform' : '';
+    tdPlatform.replaceChildren(document.createTextNode(departure.platform));
+    const tdStation = document.createElement('td');
+    tdStation.replaceChildren(document.createTextNode(departure.station));
+    const tdTime = document.createElement('td');
+    tdTime.title = time.toLocaleString();
+    tdTime.replaceChildren(document.createTextNode(time.toLocaleTimeString()));
+    trDeparture.replaceChildren(
+        tdCanceled,
+        tdDelay,
+        tdPlatform,
+        tdStation,
+        tdTime,
+    );
   }
 
-  result += '</table>'
-
-  return result;
+  return departuresTable;
 }
 
 function setStaticMessages(i18n) {
@@ -113,13 +143,18 @@ function setStaticMessages(i18n) {
 
 function showLiveBoard(i18n, stationName, data, liveBoard) {
   const departures = i18n.getMessage('departures') + data.departures.number;
-  liveBoard.innerHTML = departures + '<br>' + createDeparturesTable(i18n, stationName, data.departures.departure);
+
+  liveBoard.replaceChildren(
+      document.createTextNode(departures),
+      document.createElement('br'),
+      createDeparturesTable(i18n, stationName, data.departures.departure)
+  );
 
   hideLoader();
 }
 
 function showNoResults(liveBoard, i18n, stationName) {
-  liveBoard.innerHTML = i18n.getMessage('noResults') + stationName;
+  liveBoard.replaceChildren(document.createTextNode(i18n.getMessage('noResults') + stationName));
 
   hideLoader();
 }
@@ -160,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = 'hidden';
   clearSearch.addEventListener('click', function () {
-    document.getElementById('liveBoard').innerHTML = '';
+    document.getElementById('liveBoard').replaceChildren();
     stationNameInput.value = '';
     clearSearch.hidden = 'hidden'
 
