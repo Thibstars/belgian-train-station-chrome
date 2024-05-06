@@ -19,6 +19,10 @@
     "message": "Vertrekken: ",
     "description": "Label for the amount of departures."
   },
+  "arrivals": {
+    "message": "Aankomsten: ",
+    "description": "Label for the amount of arrivals."
+  },
   "noResults": {
     "message": "Geen resultaten gevonden voor ",
     "description": "Label to show when there are no results."

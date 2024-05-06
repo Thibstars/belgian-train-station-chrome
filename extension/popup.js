@@ -7,8 +7,14 @@ const API_REQUEST_INIT =         {
   }
 };
 
-async function loadLiveBoardForStation(i18n, stationName) {
+const LIVE_BOARD_TYPE = {
+  DEPARTURE: Symbol.for('departure'),
+  ARRIVAL: Symbol.for('arrival')
+}
+
+async function loadLiveBoardForStation(i18n, stationName, liveBoardType) {
   const liveBoard = document.getElementById('liveBoard');
+  liveBoard.setAttribute('data-live-board-type', Symbol.keyFor(liveBoardType));
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = false;
   removeStationDataClarifierIfPresent();
@@ -17,9 +23,22 @@ async function loadLiveBoardForStation(i18n, stationName) {
 
   showLoader();
 
+  let movement;
+
+  switch (liveBoardType) {
+    case LIVE_BOARD_TYPE.DEPARTURE:
+      movement = Symbol.keyFor(LIVE_BOARD_TYPE.DEPARTURE);
+      break;
+    case LIVE_BOARD_TYPE.ARRIVAL:
+      movement = movement = Symbol.keyFor(LIVE_BOARD_TYPE.ARRIVAL);
+      break
+    default:
+      movement = Symbol.keyFor(LIVE_BOARD_TYPE.DEPARTURE);
+  }
+
   try {
     const response = await fetch(
-        'https://api.irail.be/liveboard/?station=' + stationName + '&format=json&lang=' + i18n.getMessage('@@ui_locale'),
+        'https://api.irail.be/liveboard/?station=' + stationName + '&format=json&lang=' + i18n.getMessage('@@ui_locale') + '&arrdep=' + movement,
         API_REQUEST_INIT
     );
     return await response.json();
@@ -67,10 +86,10 @@ function hideLoader() {
   loader.children[2].hidden = 'hidden';
 }
 
-function createDeparturesTable(liveBoard, i18n, stationName, departures) {
-  const departuresTable = document.createElement('table');
-  departuresTable.id = 'liveBoardTable';
-  departuresTable.setAttribute('data-station-name', stationName);
+function createMovementTable(liveBoard, i18n, stationName, movements) {
+  const movementsTable = document.createElement('table');
+  movementsTable.id = 'liveBoardTable';
+  movementsTable.setAttribute('data-station-name', stationName);
   const headerRow = document.createElement('tr');
   const thCanceled = document.createElement('th');
   thCanceled.replaceChildren(document.createTextNode(i18n.getMessage('canceled')));
@@ -90,17 +109,17 @@ function createDeparturesTable(liveBoard, i18n, stationName, departures) {
       thStation,
       thTime,
   );
-  departuresTable.replaceChildren(headerRow);
+  movementsTable.replaceChildren(headerRow);
 
-  for (const departure of departures) {
-    const delayInMinutes = departure.delay / 60;
-    const time = new Date(departure.time * 1000);
-    const isCanceled = !departure.canceled === '0';
+  for (const movement of movements) {
+    const delayInMinutes = movement.delay / 60;
+    const time = new Date(movement.time * 1000);
+    const isCanceled = !movement.canceled === '0';
     const isDelayed = delayInMinutes > 0;
-    const isUnknownPlatform = departure.platform === '?';
+    const isUnknownPlatform = movement.platform === '?';
 
-    const trDeparture = document.createElement('tr');
-    departuresTable.appendChild(trDeparture);
+    const trMovement = document.createElement('tr');
+    movementsTable.appendChild(trMovement);
 
     const tdCanceled = document.createElement('td');
     tdCanceled.className = isCanceled ? 'canceled' : '';
@@ -110,13 +129,13 @@ function createDeparturesTable(liveBoard, i18n, stationName, departures) {
     tdDelay.replaceChildren(document.createTextNode(delayInMinutes.toString()));
     const tdPlatform = document.createElement('td');
     tdPlatform.className = isUnknownPlatform ? 'unknownPlatform' : '';
-    tdPlatform.replaceChildren(document.createTextNode(departure.platform));
+    tdPlatform.replaceChildren(document.createTextNode(movement.platform));
     const tdStation = document.createElement('td');
     tdStation.className = 'clickableCell';
-    tdStation.replaceChildren(document.createTextNode(departure.station));
+    tdStation.replaceChildren(document.createTextNode(movement.station));
     tdStation.onclick = function () {
       const selectedStationName = tdStation.innerText;
-      loadLiveBoardForStation(i18n, selectedStationName).then(
+      loadLiveBoardForStation(i18n, selectedStationName, LIVE_BOARD_TYPE.DEPARTURE).then(
           (data) => {
             showLiveBoard(i18n, selectedStationName, data, liveBoard);
             document.getElementById('stationName').value = selectedStationName;
@@ -129,7 +148,7 @@ function createDeparturesTable(liveBoard, i18n, stationName, departures) {
     const tdTime = document.createElement('td');
     tdTime.title = time.toLocaleString();
     tdTime.replaceChildren(document.createTextNode(time.toLocaleTimeString()));
-    trDeparture.replaceChildren(
+    trMovement.replaceChildren(
         tdCanceled,
         tdDelay,
         tdPlatform,
@@ -138,7 +157,7 @@ function createDeparturesTable(liveBoard, i18n, stationName, departures) {
     );
   }
 
-  return departuresTable;
+  return movementsTable;
 }
 
 function setStaticMessages(i18n) {
@@ -152,12 +171,29 @@ function setStaticMessages(i18n) {
 }
 
 function showLiveBoard(i18n, stationName, data, liveBoard) {
-  const departures = i18n.getMessage('departures') + data.departures.number;
+  const liveBoardType = Symbol.for(liveBoard.getAttribute('data-live-board-type'));
+
+  let movements;
+  let movementData;
+
+  switch (liveBoardType) {
+    case LIVE_BOARD_TYPE.DEPARTURE:
+      movements = i18n.getMessage('departures') + data.departures.number;
+      movementData = data.departures.departure;
+      break;
+    case LIVE_BOARD_TYPE.ARRIVAL:
+      movements = i18n.getMessage('arrivals') + data.arrivals.number;
+      movementData = data.arrivals.arrival;
+      break
+    default:
+      movements = i18n.getMessage('departures') + data.departures.number;
+      movementData = data.departures.departure;
+  }
 
   liveBoard.replaceChildren(
-      document.createTextNode(departures),
+      document.createTextNode(movements),
       document.createElement('br'),
-      createDeparturesTable(liveBoard, i18n, stationName, data.departures.departure)
+      createMovementTable(liveBoard, i18n, stationName, movementData)
   );
 
   hideLoader();
@@ -219,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function () {
   stationNameInput.addEventListener('input', function () {
     if (stationNameInput.value) {
       const liveBoard = document.getElementById('liveBoard');
-      loadLiveBoardForStation(i18n, stationNameInput.value).then(
+      loadLiveBoardForStation(i18n, stationNameInput.value, LIVE_BOARD_TYPE.DEPARTURE).then(
           (data) => {
             showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
           },
