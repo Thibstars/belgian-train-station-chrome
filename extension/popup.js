@@ -282,8 +282,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const manifestData = chrome.runtime.getManifest();
   const versionLink = document.getElementById('version');
-  versionLink.innerText = i18n.getMessage('version') + ' ' + manifestData.version;
-  versionLink.setAttribute('href', 'https://github.com/Thibstars/belgian-train-station-chrome/releases/tag/' + manifestData.version);
+  const version = manifestData.version;
+  versionLink.innerText = i18n.getMessage('version') + ' ' + version;
+  versionLink.setAttribute('href', 'https://github.com/Thibstars/belgian-train-station-chrome/releases/tag/' + version);
   versionLink.title = i18n.getMessage('release');
 
   const clearSearch = document.getElementById('clearSearch');
