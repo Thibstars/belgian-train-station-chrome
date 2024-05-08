@@ -46,31 +46,24 @@ async function loadLiveBoardForStation(i18n, stationName, movementType) {
       movement = Symbol.keyFor(MOVEMENT_TYPE.DEPARTURE);
   }
 
-  try {
-    const response = await fetch(
-        API_BASE_URL + '/liveboard/?station=' + stationName + '&format=json&lang=' + determineAPILanguageFromUILocale(i18n) + '&arrdep=' + movement,
-        API_REQUEST_INIT
-    );
-    return await response.json();
-  } catch (error) {
-    return error;
-  }
+  const response = await fetch(
+      API_BASE_URL + '/liveboard/?station=' + stationName + '&format=json&lang=' + determineAPILanguageFromUILocale(i18n) + '&arrdep=' + movement,
+      API_REQUEST_INIT
+  );
+
+  return await response.json();
 }
 
 async function loadRandomStation(i18n) {
-  try {
-    const response = await fetch(
-        API_BASE_URL + '/stations/?format=json&lang=' + determineAPILanguageFromUILocale(i18n),
-        API_REQUEST_INIT
-    );
-    const data = await response.json();
+  const response = await fetch(
+      API_BASE_URL + '/stations/?format=json&lang=' + determineAPILanguageFromUILocale(i18n),
+      API_REQUEST_INIT
+  );
+  const data = await response.json();
 
-    const stations = data.station;
+  const stations = data.station;
 
-    return stations[Math.floor(Math.random() * stations.length)];
-  } catch (error) {
-    return error;
-  }
+  return stations[Math.floor(Math.random() * stations.length)];
 }
 
 function removeStationDataClarifierIfPresent() {
@@ -153,7 +146,8 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
           (data) => {
             showLiveBoard(i18n, selectedStationName, data, liveBoard);
             document.getElementById('stationName').value = selectedStationName;
-          },
+          }
+      ).catch(
           () => {
             showNoResults(liveBoard, i18n, selectedStationName);
           }
@@ -280,14 +274,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const stationNameInput = document.getElementById('stationName');
-  loadRandomStation(i18n).then(
-      (randomStation) => {
-        stationNameInput.placeholder = randomStation.name;
-      },
-      () => {
-        stationNameInput.placeholder = '';
-      }
-  );
+  loadRandomStation(i18n).then((randomStation) => {
+    stationNameInput.placeholder = randomStation.name;
+  }).catch(() => {
+    stationNameInput.placeholder = '';
+  });
 
   const manifestData = chrome.runtime.getManifest();
   document.getElementById('version').innerText = i18n.getMessage('version') + ' ' + manifestData.version;
@@ -303,7 +294,9 @@ document.addEventListener('DOMContentLoaded', function () {
         (randomStation) => {
           stationNameInput.placeholder = randomStation.name;
         }
-    );
+    ).catch(() => {
+      stationNameInput.placeholder = '';
+    });
   });
 
   stationNameInput.addEventListener('input', function () {
@@ -314,7 +307,8 @@ document.addEventListener('DOMContentLoaded', function () {
       loadLiveBoardForStation(i18n, stationNameInput.value, movementType).then(
           (data) => {
             showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
-          },
+          }
+      ).catch(
           () => {
             showNoResults(liveBoard, i18n, stationNameInput.value);
           }
@@ -339,7 +333,8 @@ document.addEventListener('DOMContentLoaded', function () {
               if (stationDataClarifier) {
                 showStationDataClarifier(clearSearch, i18n);
               }
-            },
+            }
+        ).catch(
             () => {
               showNoResults(liveBoard, i18n, stationName);
             }
