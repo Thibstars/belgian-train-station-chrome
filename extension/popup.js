@@ -281,7 +281,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   const manifestData = chrome.runtime.getManifest();
-  document.getElementById('version').innerText = i18n.getMessage('version') + ' ' + manifestData.version;
+  const versionLink = document.getElementById('version');
+  versionLink.innerText = i18n.getMessage('version') + ' ' + manifestData.version;
+  versionLink.setAttribute('href', 'https://github.com/Thibstars/belgian-train-station-chrome/releases/tag/' + manifestData.version);
+  versionLink.title = i18n.getMessage('release');
 
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = 'hidden';

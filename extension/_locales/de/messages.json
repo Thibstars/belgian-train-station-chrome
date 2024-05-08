@@ -82,5 +82,9 @@
   "unknownPlatform": {
     "message": "Die Plattform ist (noch) nicht bekannt. Schauen Sie später noch einmal nach.",
     "description": "Tooltip explaining the '?' representation for unknown platforms."
+  },
+  "release": {
+    "message": "Weitere Informationen zu dieser Version.",
+    "description": "Tooltip regarding the release version."
   }
 }
