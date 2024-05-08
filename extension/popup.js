@@ -7,9 +7,17 @@ const API_REQUEST_INIT =         {
   }
 };
 
+const SUPPORTED_API_LANGUAGES = ['en', 'nl', 'de', 'fr'];
+
 const MOVEMENT_TYPE = {
   DEPARTURE: Symbol.for('departure'),
   ARRIVAL: Symbol.for('arrival')
+}
+
+function determineAPILanguageFromUILocale(i18n) {
+  const uiLanguage = i18n.getMessage('@@ui_locale').substring(0, 2); // Only interested in the 2 first chars
+
+  return SUPPORTED_API_LANGUAGES.includes(uiLanguage) ? uiLanguage : 'en'; // Get matching lang or default to en
 }
 
 async function loadLiveBoardForStation(i18n, stationName, movementType) {
@@ -38,7 +46,7 @@ async function loadLiveBoardForStation(i18n, stationName, movementType) {
 
   try {
     const response = await fetch(
-        'https://api.irail.be/liveboard/?station=' + stationName + '&format=json&lang=' + i18n.getMessage('@@ui_locale') + '&arrdep=' + movement,
+        'https://api.irail.be/liveboard/?station=' + stationName + '&format=json&lang=' + determineAPILanguageFromUILocale(i18n) + '&arrdep=' + movement,
         API_REQUEST_INIT
     );
     return await response.json();
@@ -50,7 +58,7 @@ async function loadLiveBoardForStation(i18n, stationName, movementType) {
 async function loadRandomStation(i18n) {
   try {
     const response = await fetch(
-        'https://api.irail.be/stations/?format=json&lang=' + i18n.getMessage('@@ui_locale'),
+        'https://api.irail.be/stations/?format=json&lang=' + determineAPILanguageFromUILocale(i18n),
         API_REQUEST_INIT
     );
     const data = await response.json();
