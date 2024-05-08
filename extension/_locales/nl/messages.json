@@ -82,5 +82,9 @@
   "unknownPlatform": {
     "message": "Het perron is (nog) niet gekend. Probeer het later nog eens.",
     "description": "Tooltip explaining the '?' representation for unknown platforms."
+  },
+  "release": {
+    "message": "Meer info over deze release.",
+    "description": "Tooltip regarding the release version."
   }
 }
