@@ -7,6 +7,8 @@ const API_REQUEST_INIT =         {
   }
 };
 
+const API_BASE_URL = 'https://api.irail.be';
+
 const SUPPORTED_API_LANGUAGES = ['en', 'nl', 'de', 'fr'];
 
 const MOVEMENT_TYPE = {
@@ -46,7 +48,7 @@ async function loadLiveBoardForStation(i18n, stationName, movementType) {
 
   try {
     const response = await fetch(
-        'https://api.irail.be/liveboard/?station=' + stationName + '&format=json&lang=' + determineAPILanguageFromUILocale(i18n) + '&arrdep=' + movement,
+        API_BASE_URL + '/liveboard/?station=' + stationName + '&format=json&lang=' + determineAPILanguageFromUILocale(i18n) + '&arrdep=' + movement,
         API_REQUEST_INIT
     );
     return await response.json();
@@ -58,7 +60,7 @@ async function loadLiveBoardForStation(i18n, stationName, movementType) {
 async function loadRandomStation(i18n) {
   try {
     const response = await fetch(
-        'https://api.irail.be/stations/?format=json&lang=' + determineAPILanguageFromUILocale(i18n),
+        API_BASE_URL + '/stations/?format=json&lang=' + determineAPILanguageFromUILocale(i18n),
         API_REQUEST_INIT
     );
     const data = await response.json();
