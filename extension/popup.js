@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
     stationNameInput.placeholder = '';
   });
 
-  const manifestData = chrome.runtime.getManifest();
+  const manifestData = getManifest();
   const versionLink = document.getElementById('version');
   const version = manifestData.version;
   versionLink.innerText = getMessage(i18n, 'version') + ' ' + version;
@@ -353,4 +353,10 @@ document.addEventListener('DOMContentLoaded', function () {
 function getMessage(i18n, key) {
   // noinspection JSUnresolvedReference
   return i18n.getMessage(key);
+}
+
+// Use this method to avoid inspection warnings on chrome's runtime.getManifest method
+function getManifest() {
+  // noinspection JSUnresolvedReference
+  return chrome.runtime.getManifest();
 }
