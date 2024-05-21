@@ -72,6 +72,7 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
 
     const tdCanceled = document.createElement('td');
     tdCanceled.className = isCanceled ? 'canceled' : '';
+    tdCanceled.title = isCanceled ? getMessage(i18n, 'trainCanceled') : '';
     tdCanceled.replaceChildren(document.createTextNode(!isCanceled ? getMessage(i18n, 'no') : getMessage(i18n, 'yes')));
     const tdDelay = document.createElement('td');
     tdDelay.className = isDelayed ? 'delayed' : '';

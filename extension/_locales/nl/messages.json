@@ -79,6 +79,10 @@
     "message": "Aankomst",
     "description": "Readable type value for the ARRIVAL movement type."
   },
+  "trainCanceled": {
+    "message": "Deze trein is afgelast!",
+    "description": "Tooltip explaining that this train is canceled."
+  },
   "unknownPlatform": {
     "message": "Het perron is (nog) niet gekend. Probeer het later nog eens.",
     "description": "Tooltip explaining the '?' representation for unknown platforms."

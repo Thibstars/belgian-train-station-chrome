@@ -79,6 +79,10 @@
     "message": "Arrival",
     "description": "Readable type value for the ARRIVAL movement type."
   },
+  "trainCanceled": {
+    "message": "This train is canceled!",
+    "description": "Tooltip explaining that this train is canceled."
+  },
   "unknownPlatform": {
     "message": "The platform is not known (yet). Check again later.",
     "description": "Tooltip explaining the '?' representation for unknown platforms."
