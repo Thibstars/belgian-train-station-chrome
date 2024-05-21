@@ -11,6 +11,11 @@ const API_BASE_URL = 'https://api.irail.be';
 
 const SUPPORTED_API_LANGUAGES = ['en', 'nl', 'de', 'fr'];
 
+const MOVEMENT_TYPE = {
+  DEPARTURE: Symbol.for('departure'),
+  ARRIVAL: Symbol.for('arrival')
+}
+
 function determineAPILanguageFromUILocale(i18n) {
   const uiLanguage = getMessage(i18n, '@@ui_locale').substring(0, 2); // Only interested in the 2 first chars
 

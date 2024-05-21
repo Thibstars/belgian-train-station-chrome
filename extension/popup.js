@@ -1,8 +1,3 @@
-const MOVEMENT_TYPE = {
-  DEPARTURE: Symbol.for('departure'),
-  ARRIVAL: Symbol.for('arrival')
-}
-
 async function loadLiveBoardForStation(i18n, stationName, movementType) {
   const liveBoard = document.getElementById('liveBoard');
   liveBoard.setAttribute('data-movement-type', Symbol.keyFor(movementType));
