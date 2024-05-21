@@ -17,7 +17,7 @@ const MOVEMENT_TYPE = {
 }
 
 function determineAPILanguageFromUILocale(i18n) {
-  const uiLanguage = i18n.getMessage('@@ui_locale').substring(0, 2); // Only interested in the 2 first chars
+  const uiLanguage = getMessage(i18n, '@@ui_locale').substring(0, 2); // Only interested in the 2 first chars
 
   return SUPPORTED_API_LANGUAGES.includes(uiLanguage) ? uiLanguage : 'en'; // Get matching lang or default to en
 }
@@ -29,7 +29,7 @@ async function loadLiveBoardForStation(i18n, stationName, movementType) {
   clearSearch.hidden = false;
   removeStationDataClarifierIfPresent();
 
-  liveBoard.replaceChildren(document.createTextNode(i18n.getMessage('fetchingData') + stationName));
+  liveBoard.replaceChildren(document.createTextNode(getMessage(i18n, 'fetchingData') + stationName));
 
   showLoader();
 
@@ -95,16 +95,16 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
   movementsTable.setAttribute('data-station-name', stationName);
   const headerRow = document.createElement('tr');
   const thCanceled = document.createElement('th');
-  thCanceled.replaceChildren(document.createTextNode(i18n.getMessage('canceled')));
+  thCanceled.replaceChildren(document.createTextNode(getMessage(i18n, 'canceled')));
   const thDelay = document.createElement('th');
-  thDelay.title = i18n.getMessage('delayTitle');
-  thDelay.replaceChildren(document.createTextNode(i18n.getMessage('delay')));
+  thDelay.title = getMessage(i18n, 'delayTitle');
+  thDelay.replaceChildren(document.createTextNode(getMessage(i18n, 'delay')));
   const thPlatform = document.createElement('th');
-  thPlatform.replaceChildren(document.createTextNode(i18n.getMessage('platform')));
+  thPlatform.replaceChildren(document.createTextNode(getMessage(i18n, 'platform')));
   const thStation = document.createElement('th');
-  thStation.replaceChildren(document.createTextNode(i18n.getMessage('station')));
+  thStation.replaceChildren(document.createTextNode(getMessage(i18n, 'station')));
   const thTime = document.createElement('th');
-  thTime.replaceChildren(document.createTextNode(i18n.getMessage('time')));
+  thTime.replaceChildren(document.createTextNode(getMessage(i18n, 'time')));
   headerRow.replaceChildren(
       thCanceled,
       thDelay,
@@ -126,13 +126,13 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
 
     const tdCanceled = document.createElement('td');
     tdCanceled.className = isCanceled ? 'canceled' : '';
-    tdCanceled.replaceChildren(document.createTextNode(!isCanceled ? i18n.getMessage('no') : i18n.getMessage('yes')));
+    tdCanceled.replaceChildren(document.createTextNode(!isCanceled ? getMessage(i18n, 'no') : getMessage(i18n, 'yes')));
     const tdDelay = document.createElement('td');
     tdDelay.className = isDelayed ? 'delayed' : '';
     tdDelay.replaceChildren(document.createTextNode(isDelayed ? delayInMinutes.toString() : '-'));
     const tdPlatform = document.createElement('td');
     tdPlatform.className = isUnknownPlatform ? 'unknownPlatform' : '';
-    tdPlatform.title = isUnknownPlatform ? i18n.getMessage('unknownPlatform') : '';
+    tdPlatform.title = isUnknownPlatform ? getMessage(i18n, 'unknownPlatform') : '';
     tdPlatform.replaceChildren(document.createTextNode(movement.platform));
     const tdStation = document.createElement('td');
     tdStation.className = 'clickableCell';
@@ -169,15 +169,15 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
 }
 
 function setStaticMessages(i18n) {
-  const title = i18n.getMessage('extensionName');
+  const title = getMessage(i18n, 'extensionName');
   document.title = title;
   document.getElementById('titleHeader').innerText = title;
 
-  document.getElementById('movementTypeLabel').innerText = i18n.getMessage('movementType');
+  document.getElementById('movementTypeLabel').innerText = getMessage(i18n, 'movementType');
 
-  document.getElementById('stationNameLabel').innerText = i18n.getMessage('stationName');
+  document.getElementById('stationNameLabel').innerText = getMessage(i18n, 'stationName');
 
-  document.getElementById('clearSearch').innerText = i18n.getMessage('clear');
+  document.getElementById('clearSearch').innerText = getMessage(i18n, 'clear');
 }
 
 function showLiveBoard(i18n, stationName, data, liveBoard) {
@@ -192,7 +192,7 @@ function showLiveBoard(i18n, stationName, data, liveBoard) {
   switch (movementType) {
     case MOVEMENT_TYPE.DEPARTURE:
       movements.replaceChildren(
-          document.createTextNode(i18n.getMessage('departures')),
+          document.createTextNode(getMessage(i18n, 'departures')),
           numberSpan
       );
       numberSpan.innerText = data.departures.number;
@@ -200,7 +200,7 @@ function showLiveBoard(i18n, stationName, data, liveBoard) {
       break;
     case MOVEMENT_TYPE.ARRIVAL:
       movements.replaceChildren(
-          document.createTextNode(i18n.getMessage('arrivals')),
+          document.createTextNode(getMessage(i18n, 'arrivals')),
           numberSpan
       );
       numberSpan.innerText = data.arrivals.number;
@@ -209,7 +209,7 @@ function showLiveBoard(i18n, stationName, data, liveBoard) {
       break
     default:
       movements.replaceChildren(
-          document.createTextNode(i18n.getMessage('departures')),
+          document.createTextNode(getMessage(i18n, 'departures')),
           numberSpan
       );
       numberSpan.innerText = data.departures.number;
@@ -226,7 +226,7 @@ function showLiveBoard(i18n, stationName, data, liveBoard) {
 }
 
 function showNoResults(liveBoard, i18n, stationName) {
-  liveBoard.replaceChildren(document.createTextNode(i18n.getMessage('noResults') + stationName));
+  liveBoard.replaceChildren(document.createTextNode(getMessage(i18n, 'noResults') + stationName));
 
   hideLoader();
 }
@@ -236,7 +236,7 @@ function showStationDataClarifier(clearSearch, i18n) {
   const stationName = document.getElementById('liveBoardTable').getAttribute('data-station-name');
   const stationDataClarifier = document.createElement('span');
   stationDataClarifier.setAttribute('id', 'stationDataClarifier')
-  stationDataClarifier.innerText = i18n.getMessage('stationDataClarification') + ' ' + stationName;
+  stationDataClarifier.innerText = getMessage(i18n, 'stationDataClarification') + ' ' + stationName;
   const liveBoardContainer = document.getElementById('liveBoardContainer');
   liveBoardContainer.insertBefore(stationDataClarifier, liveBoardContainer.children[0]);
 }
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
   for (let key in MOVEMENT_TYPE) {
     const option = document.createElement('option');
     option.value = key;
-    option.innerText = i18n.getMessage('movementType_' + key);
+    option.innerText = getMessage(i18n, 'movementType_' + key);
     movementTypeSelect.appendChild(option);
   }
 
@@ -283,9 +283,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const manifestData = chrome.runtime.getManifest();
   const versionLink = document.getElementById('version');
   const version = manifestData.version;
-  versionLink.innerText = i18n.getMessage('version') + ' ' + version;
+  versionLink.innerText = getMessage(i18n, 'version') + ' ' + version;
   versionLink.setAttribute('href', 'https://github.com/Thibstars/belgian-train-station-chrome/releases/tag/' + version);
-  versionLink.title = i18n.getMessage('release');
+  versionLink.title = getMessage(i18n, 'release');
 
   const clearSearch = document.getElementById('clearSearch');
   clearSearch.hidden = 'hidden';
@@ -348,3 +348,9 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
 }, false);
+
+// Use this method to avoid inspection warnings on i18n's getMessage method
+function getMessage(i18n, key) {
+  // noinspection JSUnresolvedReference
+  return i18n.getMessage(key);
+}
