@@ -117,7 +117,7 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
   for (const movement of movements) {
     const delayInMinutes = movement.delay / 60;
     const time = new Date(movement.time * 1000);
-    const isCanceled = !movement.canceled === '0';
+    const isCanceled = movement.canceled !== '0';
     const isDelayed = delayInMinutes > 0;
     const isUnknownPlatform = movement.platform === '?';
 
