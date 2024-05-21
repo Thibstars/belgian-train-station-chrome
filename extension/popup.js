@@ -261,6 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
   loader.children[1].hidden = 'hidden';
   loader.children[2].hidden = 'hidden';
 
+  // noinspection JSUnresolvedReference
   const i18n = chrome.i18n;
   setStaticMessages(i18n);
 
