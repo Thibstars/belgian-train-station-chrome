@@ -80,6 +80,12 @@ input:-webkit-autofill:active{
     box-shadow: inset 0 0 20px 20px var(--input-autofill-background-color);
 }
 
+input {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 3px;
+}
+
 html.color-theme-in-transition,
 html.color-theme-in-transition *,
 html.color-theme-in-transition *:before,
@@ -144,12 +150,6 @@ html.color-theme-in-transition *:after {
 .formLabel {
     font-weight: bold;
     min-width: 30%;
-}
-
-#movementType {
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 3px;
 }
 
 #stationName {
@@ -298,6 +298,5 @@ html.color-theme-in-transition *:after {
 
 #themeInputContainer {
     float: right;
-    margin-right: 5px;
     margin-bottom: 5px;
 }
