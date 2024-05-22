@@ -1,15 +1,91 @@
-html body {
-    width: 400px;
-    height: 150px;
-}
-
 :root {
     --flag-black: #000000;
     --flag-yellow: rgba(253, 218, 37, 1);
     --flag-red: rgba(239, 51, 64, 1);
-    --accent-color: #DDF1FA;
 
     --size-bezel: .5rem;
+}
+
+html {
+    --text-color-normal: black;
+    --text-color-light: grey;
+
+    --accent-color: #DDF1FA;
+
+    --background-color-normal: white;
+    --table-background-color-even: #f2f2f2;
+    --table-color-even: black;
+    --table-background-color: #ddd;
+    --loading-state-background-color: rgba(0, 0, 0, 0.3);
+    --border-color: black;
+
+    --input-autofill-color: auto;
+    --input-autofill-background-color: auto;
+}
+
+html[data-theme='dark'] {
+    --text-color-light: hsl(210, 15%, 35%);
+    --background-color-normal: var(--flag-black);
+
+    --hue: 210; /* Blue */
+    --accent-hue: 25; /* Orange */
+    --text-color-normal: hsl(var(--hue), 10%, 62%);
+    --text-color-highlight: hsl(var(--accent-hue), 70%, 45%);
+    --table-background-color-even: darkgoldenrod;
+    --table-color-even: black;
+    --table-background-color: #ddd;
+    --loading-state-background-color: rgba(200, 200, 200, 0.3);
+
+    --accent-color: hsl(var(--accent-hue), 70%, 30%);
+    --border-color: var(--text-color-light);
+
+    --input-autofill-color: var(--background-color-normal);
+    --input-autofill-background-color: var(--text-color-normal);
+}
+
+img {
+    mix-blend-mode: multiply;
+}
+
+html[data-theme='dark'] img {
+    filter: invert(100%) hue-rotate(180deg);
+    mix-blend-mode: screen;
+}
+
+body {
+    width: 400px;
+    height: 150px;
+
+    color: var(--text-color-normal);
+    background-color: var(--background-color-normal);
+}
+
+input, select, button {
+    color: var(--text-color-normal);
+    background-color: var(--background-color-normal);
+    border-color: var(--border-color);
+}
+
+::placeholder {
+    color: var(--text-color-light);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--input-autofill-color);
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px var(--input-autofill-background-color);
+}
+
+html.color-theme-in-transition,
+html.color-theme-in-transition *,
+html.color-theme-in-transition *:before,
+html.color-theme-in-transition *:after {
+    transition: all 750ms !important;
+    transition-delay: 0ms !important;
 }
 
 #titleHeader {
@@ -71,48 +147,49 @@ html body {
 }
 
 #movementType {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 3px;
 }
 
 #stationName {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 5px;
 }
 
 #clearSearch {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     margin-left: .5em;
 }
 
 #liveBoardTable {
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     border-collapse: collapse
 }
 
 #liveBoardTable tr td {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     text-align: center;
     padding: 2px;
 }
 
 #liveBoardTable th {
     background-color: var(--accent-color);
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     text-align: center;
     padding: 2px;
 }
 
 #liveBoardTable tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: var(--table-background-color-even);
+    color: var(--table-color-even);
 }
 
 #liveBoardTable tr:hover {
-    background-color: #ddd;
+    background-color: var(--table-background-color);
 }
 
 #liveBoardTable .canceled,
@@ -134,7 +211,7 @@ html body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--loading-state-background-color);
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -206,11 +283,21 @@ html body {
 #movementAmount {
     font-weight: bold;
     background-color: var(--accent-color);
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     border-radius: 50%;
     padding: 2px;
     display: inline-flex;
     justify-content: center;
     width: 18px;
     margin-left: .5em;
+}
+
+#version {
+    color: var(--text-color-highlight);
+}
+
+#themeInputContainer {
+    float: right;
+    margin-right: 5px;
+    margin-bottom: 5px;
 }

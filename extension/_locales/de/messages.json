@@ -98,5 +98,17 @@
   "release": {
     "message": "Weitere Informationen zu dieser Version.",
     "description": "Tooltip regarding the release version."
+  },
+  "theme": {
+    "message": "Thema",
+    "description": "Theme."
+  },
+  "theme_light": {
+    "message": "Licht",
+    "description": "Light theme readable name."
+  },
+  "theme_dark": {
+    "message": "Dunkel",
+    "description": "Dark theme readable name."
   }
 }
