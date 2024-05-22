@@ -1,3 +1,8 @@
+const THEME = {
+  LIGHT: Symbol.for('light'),
+  DARK: Symbol.for('dark')
+};
+
 async function loadLiveBoardForStation(i18n, stationName, movementType) {
   const liveBoard = document.getElementById('liveBoard');
   liveBoard.setAttribute('data-movement-type', Symbol.keyFor(movementType));
@@ -120,6 +125,8 @@ function setStaticMessages(i18n) {
   document.title = title;
   document.getElementById('titleHeader').innerText = title;
 
+  document.getElementById('themeLabel').innerText = getMessage(i18n, 'theme');
+
   document.getElementById('movementTypeLabel').innerText = getMessage(i18n, 'movementType');
 
   document.getElementById('movementType').title = getMessage(i18n, 'movementTypeHelp');
@@ -205,7 +212,23 @@ function getSelectedMovementType() {
   }
 }
 
+function switchThemes(theme, animateTransition) {
+  document.documentElement.setAttribute('data-theme', theme);
+  if (animateTransition) {
+    document.documentElement.classList.add('color-theme-in-transition');
+    window.setTimeout(function () {
+      document.documentElement.classList.remove('color-theme-in-transition')
+    }, 1000);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+  getValueFromGlobalStorage('theme').then((result) => {
+    const themeToUse = result.theme ? result.theme : 'light';
+    document.getElementById('theme').value = themeToUse.toUpperCase();
+    switchThemes(themeToUse, false);
+  });
+
   const loader = document.getElementById('loader');
   loader.removeAttribute('class');
   loader.children[0].hidden = 'hidden';
@@ -215,6 +238,14 @@ document.addEventListener('DOMContentLoaded', function () {
   // noinspection JSUnresolvedReference
   const i18n = chrome.i18n;
   setStaticMessages(i18n);
+
+  const themeSelect = document.getElementById('theme');
+  for (let theme in THEME) {
+    const option = document.createElement('option');
+    option.value = theme;
+    option.innerText = getMessage(i18n, 'theme_' + theme);
+    themeSelect.appendChild(option);
+  }
 
   const movementTypeSelect = document.getElementById('movementType');
   movementTypeSelect.replaceChildren();
@@ -273,6 +304,14 @@ document.addEventListener('DOMContentLoaded', function () {
       showStationDataClarifier(clearSearch, i18n);
     }
   });
+
+  themeSelect.addEventListener('change', () => {
+    const selectedTheme = themeSelect.value.toLowerCase();
+
+    storeValueInGlobalStorage('theme', selectedTheme);
+
+    return switchThemes(selectedTheme, true);
+  })
 
   movementTypeSelect.addEventListener('change', () => {
     const liveBoard = document.getElementById('liveBoard');
