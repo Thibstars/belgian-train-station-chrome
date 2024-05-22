@@ -14,3 +14,13 @@ function getManifest() {
   // noinspection JSUnresolvedReference
   return chrome.runtime.getManifest();
 }
+
+function storeValueInGlobalStorage(key, value) {
+  // noinspection JSUnresolvedReference
+  return chrome.storage.sync.set({[key]: value});
+}
+
+function getValueFromGlobalStorage(key) {
+  // noinspection JSUnresolvedReference
+  return chrome.storage.sync.get([key]);
+}

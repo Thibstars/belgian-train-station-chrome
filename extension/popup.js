@@ -212,15 +212,23 @@ function getSelectedMovementType() {
   }
 }
 
-function switchThemes(theme) {
-  document.documentElement.classList.add('color-theme-in-transition');
+function switchThemes(theme, animateTransition) {
   document.documentElement.setAttribute('data-theme', theme);
-  window.setTimeout(function() {
-    document.documentElement.classList.remove('color-theme-in-transition')
-  }, 1000);
+  if (animateTransition) {
+    document.documentElement.classList.add('color-theme-in-transition');
+    window.setTimeout(function () {
+      document.documentElement.classList.remove('color-theme-in-transition')
+    }, 1000);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  getValueFromGlobalStorage('theme').then((result) => {
+    const themeToUse = result.theme ? result.theme : 'light';
+    document.getElementById('theme').value = themeToUse.toUpperCase();
+    switchThemes(themeToUse, false);
+  });
+
   const loader = document.getElementById('loader');
   loader.removeAttribute('class');
   loader.children[0].hidden = 'hidden';
@@ -298,7 +306,11 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   themeSelect.addEventListener('change', () => {
-    return switchThemes(themeSelect.value.toLowerCase());
+    const selectedTheme = themeSelect.value.toLowerCase();
+
+    storeValueInGlobalStorage('theme', selectedTheme);
+
+    return switchThemes(selectedTheme, true);
   })
 
   movementTypeSelect.addEventListener('change', () => {
