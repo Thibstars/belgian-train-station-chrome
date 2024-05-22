@@ -7,6 +7,10 @@
     "message": "Stationsnaam",
     "description": "Station name."
   },
+  "stationNameHelp": {
+    "message": "Geef een station op waarvoor je tijden wilt bekijken.",
+    "description": "Tooltip explaining the station name input."
+  },
   "clear": {
     "message": "Wissen",
     "description": "Clear."
@@ -70,6 +74,10 @@
   "movementType": {
     "message": "Vertrek/Aankomst",
     "description": "Movement type."
+  },
+  "movementTypeHelp": {
+    "message": "Selecteer of je vertrek of aankomsttijden wil zien.",
+    "description": "Tooltip explaining the movement type choice."
   },
   "movementType_DEPARTURE": {
     "message": "Vertrek",

@@ -7,6 +7,10 @@
     "message": "Stationsname",
     "description": "Station name."
   },
+  "stationNameHelp": {
+    "message": "Geben Sie eine Station ein, für die Sie die Zeiten anzeigen möchten.",
+    "description": "Tooltip explaining the station name input."
+  },
   "clear": {
     "message": "Löschen",
     "description": "Clear."
@@ -70,6 +74,10 @@
   "movementType": {
     "message": "Abfahrt/Ankunft",
     "description": "Movement type."
+  },
+  "movementTypeHelp": {
+    "message": "Wählen Sie aus, ob Sie Abfahrts- oder Ankunftszeiten sehen möchten.",
+    "description": "Tooltip explaining the movement type choice."
   },
   "movementType_DEPARTURE": {
     "message": "Abfahrt",

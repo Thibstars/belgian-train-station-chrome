@@ -7,6 +7,10 @@
     "message": "Nom de la gare",
     "description": "Station name."
   },
+  "stationNameHelp": {
+    "message": "Entrez une gare pour laquelle vous souhaitez afficher les horaires.",
+    "description": "Tooltip explaining the station name input."
+  },
   "clear": {
     "message": "Effacer",
     "description": "Clear."
@@ -70,6 +74,10 @@
   "movementType": {
     "message": "Départ/Arrivée",
     "description": "Movement type."
+  },
+  "movementTypeHelp": {
+    "message": "Choisissez si vous souhaitez voir les heures de départ ou d'arrivée.",
+    "description": "Tooltip explaining the movement type choice."
   },
   "movementType_DEPARTURE": {
     "message": "Départ",

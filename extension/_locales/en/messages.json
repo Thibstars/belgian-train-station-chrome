@@ -7,6 +7,10 @@
     "message": "Station name",
     "description": "Station name."
   },
+  "stationNameHelp": {
+    "message": "Enter a station you want to view times for.",
+    "description": "Tooltip explaining the station name input."
+  },
   "clear": {
     "message": "Clear",
     "description": "Clear."
@@ -70,6 +74,10 @@
   "movementType": {
     "message": "Departure/Arrival",
     "description": "Movement type."
+  },
+  "movementTypeHelp": {
+    "message": "Choose whether you want to see departure or arrival times.",
+    "description": "Tooltip explaining the movement type choice."
   },
   "movementType_DEPARTURE": {
     "message": "Departure",

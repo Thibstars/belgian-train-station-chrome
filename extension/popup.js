@@ -122,7 +122,11 @@ function setStaticMessages(i18n) {
 
   document.getElementById('movementTypeLabel').innerText = getMessage(i18n, 'movementType');
 
+  document.getElementById('movementType').title = getMessage(i18n, 'movementTypeHelp');
+
   document.getElementById('stationNameLabel').innerText = getMessage(i18n, 'stationName');
+
+  document.getElementById('stationName').title = getMessage(i18n, 'stationNameHelp');
 
   document.getElementById('clearSearch').innerText = getMessage(i18n, 'clear');
 }
