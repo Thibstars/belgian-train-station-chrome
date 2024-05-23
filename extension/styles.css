@@ -83,6 +83,7 @@ html[data-theme='high_contrast'] img {
     mix-blend-mode: screen;
 }
 
+html[data-theme='dark'] ::-webkit-search-cancel-button,
 html[data-theme='high_contrast'] ::-webkit-search-cancel-button {
     filter: brightness(0%);
 }
