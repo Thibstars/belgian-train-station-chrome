@@ -83,6 +83,10 @@ html[data-theme='high_contrast'] img {
     mix-blend-mode: screen;
 }
 
+html[data-theme='high_contrast'] ::-webkit-search-cancel-button {
+    filter: brightness(0%);
+}
+
 body {
     width: 400px;
     height: 150px;
