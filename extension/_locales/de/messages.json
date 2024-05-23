@@ -110,5 +110,9 @@
   "theme_dark": {
     "message": "Dunkel",
     "description": "Dark theme readable name."
+  },
+  "theme_high_contrast": {
+    "message": "Hoher Kontrast",
+    "description": "High contrast theme readable name."
   }
 }

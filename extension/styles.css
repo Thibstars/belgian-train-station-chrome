@@ -47,12 +47,39 @@ html[data-theme='dark'] {
     --input-autofill-background-color: var(--text-color-normal);
 }
 
+html[data-theme='high_contrast'] {
+    --text-color-light: white;
+    --background-color-normal: black;
+
+    --hue: 210; /* Blue */
+    --accent-hue: 25; /* Orange */
+    --text-color-normal: white;
+    --text-color-highlight: white;
+    --table-background-color-even: orange;
+    --table-color-even: black;
+    --table-background-color: white;
+    --loading-state-background-color: rgba(400, 400, 400, 0.3);
+
+    --accent-color: black;
+    --border-color: white;
+    --scrollbar-handle-color: var(--text-color-light);
+    --scrollbar-handle-color-hover: grey;
+
+    --input-autofill-color: var(--background-color-normal);
+    --input-autofill-background-color: var(--text-color-normal);
+}
+
 img {
     mix-blend-mode: multiply;
 }
 
 html[data-theme='dark'] img {
     filter: invert(100%) hue-rotate(180deg);
+    mix-blend-mode: screen;
+}
+
+html[data-theme='high_contrast'] img {
+    filter: invert(100%);
     mix-blend-mode: screen;
 }
 
@@ -211,8 +238,9 @@ html.color-theme-in-transition *:after {
     color: var(--table-color-even);
 }
 
-#liveBoardTable tr:hover {
+#liveBoardTable tr:not(:first-child):hover {
     background-color: var(--table-background-color);
+    color: var(--table-color-even);
 }
 
 #liveBoardTable .canceled,

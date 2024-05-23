@@ -1,6 +1,7 @@
 const THEME = {
   LIGHT: Symbol.for('light'),
-  DARK: Symbol.for('dark')
+  DARK: Symbol.for('dark'),
+  HIGH_CONTRAST: Symbol.for('high_contrast'),
 };
 
 async function loadLiveBoardForStation(i18n, stationName, movementType) {
