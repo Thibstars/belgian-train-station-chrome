@@ -18,6 +18,8 @@ html {
     --table-background-color: #ddd;
     --loading-state-background-color: rgba(0, 0, 0, 0.3);
     --border-color: black;
+    --scrollbar-handle-color: grey;
+    --scrollbar-handle-color-hover: lightgrey;
 
     --input-autofill-color: auto;
     --input-autofill-background-color: auto;
@@ -38,6 +40,8 @@ html[data-theme='dark'] {
 
     --accent-color: hsl(var(--accent-hue), 70%, 30%);
     --border-color: var(--text-color-light);
+    --scrollbar-handle-color: var(--text-color-light);
+    --scrollbar-handle-color-hover: var(--text-color-normal);
 
     --input-autofill-color: var(--background-color-normal);
     --input-autofill-background-color: var(--text-color-normal);
@@ -84,6 +88,25 @@ input {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     padding: 3px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    /*background: #888;*/
+    background: var(--scrollbar-handle-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    /*background: #555;*/
+    background: var(--scrollbar-handle-color-hover);
 }
 
 html.color-theme-in-transition,
