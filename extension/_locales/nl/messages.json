@@ -110,5 +110,9 @@
   "theme_dark": {
     "message": "Donker",
     "description": "Dark theme readable name."
+  },
+  "theme_high_contrast": {
+    "message": "Hoog Contrast",
+    "description": "High contrast theme readable name."
   }
 }
