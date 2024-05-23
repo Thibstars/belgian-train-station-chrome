@@ -18,8 +18,8 @@ html {
     --table-background-color: #ddd;
     --loading-state-background-color: rgba(0, 0, 0, 0.3);
     --border-color: black;
-    --scrollbar-handle-color: lightgrey;
-    --scrollbar-handle-color-hover: grey;
+    --scrollbar-handle-color: grey;
+    --scrollbar-handle-color-hover: lightgrey;
 
     --input-autofill-color: auto;
     --input-autofill-background-color: auto;
@@ -40,8 +40,8 @@ html[data-theme='dark'] {
 
     --accent-color: hsl(var(--accent-hue), 70%, 30%);
     --border-color: var(--text-color-light);
-    --scrollbar-handle-color: var(--text-color-normal);
-    --scrollbar-handle-color-hover: var(--text-color-light);
+    --scrollbar-handle-color: var(--text-color-light);
+    --scrollbar-handle-color-hover: var(--text-color-normal);
 
     --input-autofill-color: var(--background-color-normal);
     --input-autofill-background-color: var(--text-color-normal);
