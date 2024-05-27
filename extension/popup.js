@@ -314,23 +314,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  let typingTimer;
   stationNameInput.addEventListener('input', function () {
-    if (stationNameInput.value) {
-      let movementType = getSelectedMovementType();
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+      if (stationNameInput.value) {
+        let movementType = getSelectedMovementType();
 
-      const liveBoard = document.getElementById('liveBoard');
-      loadLiveBoardForStation(i18n, stationNameInput.value, movementType).then(
-          (data) => {
-            showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
-          }
-      ).catch(
-          () => {
-            showNoResults(liveBoard, i18n, stationNameInput.value);
-          }
-      );
-    } else {
-      showStationDataClarifier(clearSearch, i18n);
-    }
+        const liveBoard = document.getElementById('liveBoard');
+        loadLiveBoardForStation(i18n, stationNameInput.value, movementType).then(
+            (data) => {
+              showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
+            }
+        ).catch(
+            () => {
+              showNoResults(liveBoard, i18n, stationNameInput.value);
+            }
+        );
+      } else {
+        showStationDataClarifier(clearSearch, i18n);
+      }
+    }, 500);
   });
 
   themeSelect.addEventListener('change', () => {
