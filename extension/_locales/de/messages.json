@@ -95,6 +95,10 @@
     "message": "Die Plattform ist (noch) nicht bekannt. Schauen Sie später noch einmal nach.",
     "description": "Tooltip explaining the '?' representation for unknown platforms."
   },
+  "lastUpdated": {
+    "message": "Letzte Aktualisierung",
+    "description": "Label in front of the last updated time."
+  },
   "release": {
     "message": "Weitere Informationen zu dieser Version.",
     "description": "Tooltip regarding the release version."

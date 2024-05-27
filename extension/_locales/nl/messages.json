@@ -95,6 +95,10 @@
     "message": "Het perron is (nog) niet gekend. Probeer het later nog eens.",
     "description": "Tooltip explaining the '?' representation for unknown platforms."
   },
+  "lastUpdated": {
+    "message": "Laatst bijgewerkt",
+    "description": "Label in front of the last updated time."
+  },
   "release": {
     "message": "Meer info over deze release.",
     "description": "Tooltip regarding the release version."

@@ -4,6 +4,9 @@ const THEME = {
   HIGH_CONTRAST: Symbol.for('high_contrast'),
 };
 
+let liveBoardRefreshTimer;
+const LIVE_BOARD_REFRESH_INTERVAL = 60 * 1000;
+
 async function loadLiveBoardForStation(i18n, stationName, movementType) {
   const liveBoard = document.getElementById('liveBoard');
   liveBoard.setAttribute('data-movement-type', Symbol.keyFor(movementType));
@@ -90,7 +93,7 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
     const tdStation = document.createElement('td');
     tdStation.className = 'clickableCell';
     tdStation.replaceChildren(document.createTextNode(movement.station));
-    tdStation.onclick = function () {
+    const loadAndShowLiveBoard = () => {
       const selectedStationName = tdStation.innerText;
 
       let movementType = getSelectedMovementType()
@@ -105,6 +108,11 @@ function createMovementTable(liveBoard, i18n, stationName, movements) {
             showNoResults(liveBoard, i18n, selectedStationName);
           }
       );
+    }
+    tdStation.onclick = function () {
+      clearInterval(liveBoardRefreshTimer);
+      loadAndShowLiveBoard();
+      liveBoardRefreshTimer = setInterval(loadAndShowLiveBoard, LIVE_BOARD_REFRESH_INTERVAL);
     };
     const tdTime = document.createElement('td');
     tdTime.title = time.toLocaleString();
@@ -175,10 +183,16 @@ function showLiveBoard(i18n, stationName, data, liveBoard) {
       movementData = data.departures.departure;
   }
 
+  const movementTable = createMovementTable(liveBoard, i18n, stationName, movementData);
+
+  const lastUpdated = document.createElement('span');
+  lastUpdated.innerText = getMessage(i18n, 'lastUpdated') + ': ' + new Date().toLocaleTimeString();
+
   liveBoard.replaceChildren(
       movements,
       document.createElement('br'),
-      createMovementTable(liveBoard, i18n, stationName, movementData)
+      movementTable,
+      lastUpdated
   );
 
   hideLoader();
@@ -318,22 +332,27 @@ document.addEventListener('DOMContentLoaded', function () {
   stationNameInput.addEventListener('input', function () {
     clearTimeout(typingTimer);
     typingTimer = setTimeout(() => {
-      if (stationNameInput.value) {
-        let movementType = getSelectedMovementType();
+      clearInterval(liveBoardRefreshTimer);
+      const loadAndShowLiveBoard = () => {
+        if (stationNameInput.value) {
+          let movementType = getSelectedMovementType();
 
-        const liveBoard = document.getElementById('liveBoard');
-        loadLiveBoardForStation(i18n, stationNameInput.value, movementType).then(
-            (data) => {
-              showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
-            }
-        ).catch(
-            () => {
-              showNoResults(liveBoard, i18n, stationNameInput.value);
-            }
-        );
-      } else {
-        showStationDataClarifier(clearSearch, i18n);
-      }
+          const liveBoard = document.getElementById('liveBoard');
+          loadLiveBoardForStation(i18n, stationNameInput.value, movementType).then(
+              (data) => {
+                showLiveBoard(i18n, stationNameInput.value, data, liveBoard);
+              }
+          ).catch(
+              () => {
+                showNoResults(liveBoard, i18n, stationNameInput.value);
+              }
+          );
+        } else {
+          showStationDataClarifier(clearSearch, i18n);
+        }
+      };
+      loadAndShowLiveBoard();
+      liveBoardRefreshTimer = setInterval(loadAndShowLiveBoard, LIVE_BOARD_REFRESH_INTERVAL);
     }, 500);
   });
 
@@ -349,25 +368,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const liveBoard = document.getElementById('liveBoard');
     const liveBoardTable = document.getElementById('liveBoardTable');
 
-    if (liveBoardTable) {
-      const stationName = liveBoardTable.getAttribute('data-station-name');
-      if (stationName) {
-        const stationDataClarifier = document.getElementById('stationDataClarifier');
+    clearInterval(liveBoardRefreshTimer);
+    const loadAndShowLiveBoard = () => {
+      if (liveBoardTable) {
+        const stationName = liveBoardTable.getAttribute('data-station-name');
+        if (stationName) {
+          const stationDataClarifier = document.getElementById('stationDataClarifier');
 
-        loadLiveBoardForStation(i18n, stationName, getSelectedMovementType()).then(
-            (data) => {
-              showLiveBoard(i18n, stationName, data, liveBoard);
-              if (stationDataClarifier) {
-                showStationDataClarifier(clearSearch, i18n);
+          loadLiveBoardForStation(i18n, stationName, getSelectedMovementType()).then(
+              (data) => {
+                showLiveBoard(i18n, stationName, data, liveBoard);
+                if (stationDataClarifier) {
+                  showStationDataClarifier(clearSearch, i18n);
+                }
               }
-            }
-        ).catch(
-            () => {
-              showNoResults(liveBoard, i18n, stationName);
-            }
-        );
+          ).catch(
+              () => {
+                showNoResults(liveBoard, i18n, stationName);
+              }
+          );
+        }
       }
-    }
-  })
+    };
+    loadAndShowLiveBoard();
+    liveBoardRefreshTimer = setInterval(loadAndShowLiveBoard, LIVE_BOARD_REFRESH_INTERVAL);
+  });
 
 }, false);

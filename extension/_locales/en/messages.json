@@ -95,6 +95,10 @@
     "message": "The platform is not known (yet). Check again later.",
     "description": "Tooltip explaining the '?' representation for unknown platforms."
   },
+  "lastUpdated": {
+    "message": "Last updated",
+    "description": "Label in front of the last updated time."
+  },
   "release": {
     "message": "More info about this release.",
     "description": "Tooltip regarding the release version."
