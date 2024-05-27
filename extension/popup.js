@@ -175,10 +175,16 @@ function showLiveBoard(i18n, stationName, data, liveBoard) {
       movementData = data.departures.departure;
   }
 
+  const movementTable = createMovementTable(liveBoard, i18n, stationName, movementData);
+
+  const lastUpdated = document.createElement('span');
+  lastUpdated.innerText = getMessage(i18n, 'lastUpdated') + ': ' + new Date().toLocaleTimeString();
+
   liveBoard.replaceChildren(
       movements,
       document.createElement('br'),
-      createMovementTable(liveBoard, i18n, stationName, movementData)
+      movementTable,
+      lastUpdated
   );
 
   hideLoader();
