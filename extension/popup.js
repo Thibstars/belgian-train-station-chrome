@@ -223,6 +223,32 @@ function switchThemes(theme, animateTransition) {
   }
 }
 
+function showClock() {
+  const clock = document.getElementById('clock');
+  const hours = document.getElementById('hours');
+  const minutes = document.getElementById('minutes');
+  const seconds = document.getElementById('seconds');
+
+  showTime(clock, hours, minutes, seconds);
+
+  setInterval(() => {
+        showTime(clock, hours, minutes, seconds);
+      },
+      1000
+  );
+}
+
+function showTime(clock, hours, minutes, seconds) {
+  const date = new Date();
+  if (!clock.matches(':hover')) {
+    // Do not constantly update the tooltip while showing it (it will flash)
+    clock.title = date.toLocaleString();
+  }
+  hours.innerText = date.getHours().toString().padStart(2, "0");
+  minutes.innerText = date.getMinutes().toString().padStart(2, "0");
+  seconds.innerText = date.getSeconds().toString().padStart(2, "0");
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   getValueFromGlobalStorage('theme').then((result) => {
     const themeToUse = result.theme ? result.theme : 'light';
@@ -239,6 +265,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // noinspection JSUnresolvedReference
   const i18n = chrome.i18n;
   setStaticMessages(i18n);
+  showClock();
 
   const themeSelect = document.getElementById('theme');
   for (let theme in THEME) {
