@@ -131,13 +131,11 @@ input {
 }
 
 ::-webkit-scrollbar-thumb {
-    /*background: #888;*/
     background: var(--scrollbar-handle-color);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    /*background: #555;*/
     background: var(--scrollbar-handle-color-hover);
 }
 
